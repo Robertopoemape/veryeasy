@@ -8,6 +8,7 @@ import '../../../core/router/router.dart';
 import '../../../core/router/router_provider.gr.dart';
 import '../../../src/services/auth/auth_service.dart';
 import '../../generator_ia/screens/generator_ia_screen.dart';
+import '../../product_screens/screen/product_screen.dart';
 import '../../video_ads/screens/video_ads_screen.dart';
 import '../providers/home_notifier.dart';
 
@@ -18,9 +19,8 @@ class HomeScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final authService = ref.watch(authServiceProvider);
-    final selectedIndex =
-        ref.watch(homeProvider); // Obtener el índice de la pestaña
-    final homeNotifier = ref.read(homeProvider.notifier); // Obtener el notifier
+    final selectedIndex = ref.watch(homeProvider);
+    final homeNotifier = ref.read(homeProvider.notifier);
 
     final List<String> titles = [
       'Inicio',
@@ -33,7 +33,7 @@ class HomeScreen extends ConsumerWidget {
     final List<Widget> screens = [
       const Center(child: Text('Inicio')),
       const VideoAdsScreen(),
-      const Center(child: Text('Productos')),
+      const ProductScreen(),
       const Center(child: Text('Inventario')),
       const GeneratorIAScreen(),
     ];
@@ -68,12 +68,12 @@ class HomeScreen extends ConsumerWidget {
           ),
         ],
       ),
-      body: screens[selectedIndex], // Muestra la pantalla según el índice
+      body: screens[selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: selectedIndex, // Usa el índice del provider
-        onTap: (index) => homeNotifier.setIndex(index), // Cambia la pestaña
-        unselectedItemColor: Colors.blue,
-        selectedItemColor: Colors.green,
+        currentIndex: selectedIndex,
+        onTap: (index) => homeNotifier.setIndex(index),
+        unselectedItemColor: ComColors.green400,
+        selectedItemColor: ComColors.primaryColor,
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.dashboard), label: 'Inicio'),
           BottomNavigationBarItem(

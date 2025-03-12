@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:veryeasy/core/router/router_provider.gr.dart';
 
+import '../../../components/components.dart';
 import '../../../core/router/router.dart';
 import '../providers/video_ad_notifier.dart';
 
@@ -62,11 +63,8 @@ class VideoAdsScreen extends ConsumerWidget {
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (error, _) => Center(child: Text('Error: $error')),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          ref.read(videoAdNotifierProvider.notifier).refresh();
-        },
-        child: const Icon(Icons.refresh),
+      floatingActionButton: CompFloactingActionButton(
+        onPressed: () => ref.read(videoAdNotifierProvider.notifier).refresh(),
       ),
     );
   }

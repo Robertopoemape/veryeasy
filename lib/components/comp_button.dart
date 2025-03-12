@@ -29,14 +29,7 @@ class CompButton extends StatefulWidget {
 }
 
 class CompButtonState extends State<CompButton> {
-  Color? borderColor;
   bool isLoading = false;
-
-  @override
-  void initState() {
-    super.initState();
-    borderColor = widget.borderColor ?? ComColors.black500;
-  }
 
   void _handlePressed() async {
     if (widget.onPressed != null) {
@@ -69,7 +62,7 @@ class CompButtonState extends State<CompButton> {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(ds8),
               side: BorderSide(
-                color: borderColor!,
+                color: widget.borderColor!,
                 width: 1.5,
               ),
             ),
