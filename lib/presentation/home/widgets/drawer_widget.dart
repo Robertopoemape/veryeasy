@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:veryeasy/core/auth/auth_provider.dart';
+import 'package:veryeasy/presentation/home/providers/home_notifier.dart';
 
 import '../../../components/components.dart';
 import '../../../core/core.dart';
@@ -10,7 +10,7 @@ class DrawerWidget extends ConsumerWidget {
   const DrawerWidget({super.key});
 
   void _handleSignOut(BuildContext context, WidgetRef ref) {
-    final authService = ref.read(authProvider);
+    final homeNotifier = ref.read(homeNotifierProvider.notifier);
     compShowDialogMessage(
       context,
       isReturn: true,
@@ -18,7 +18,7 @@ class DrawerWidget extends ConsumerWidget {
       message: '¿Estás seguro que deseas cerrar sesión?',
       label: 'Si',
       onPressed: () {
-        authService.signOut();
+        homeNotifier.logout();
         autoRouterReplace(context, LoginRoute());
       },
     );
