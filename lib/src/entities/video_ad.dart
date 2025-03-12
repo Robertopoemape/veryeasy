@@ -1,23 +1,22 @@
-class VideoAd {
-  final String id;
-  final String title;
-  final String description;
-  final String category;
-  final String videoUrl;
-  final DateTime createdAt;
-  final String client;
-  final String campaign;
-  final Duration duration;
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-  VideoAd({
-    required this.id,
-    required this.title,
-    required this.description,
-    required this.category,
-    required this.videoUrl,
-    required this.createdAt,
-    required this.client,
-    required this.campaign,
-    required this.duration,
-  });
+part 'video_ad.freezed.dart';
+part 'video_ad.g.dart';
+
+@freezed
+class VideoAd with _$VideoAd {
+  const factory VideoAd({
+    required String id,
+    required String title,
+    required String description,
+    required String category,
+    required String videoUrl,
+    required DateTime createdAt,
+    required String client,
+    required String campaign,
+    required Duration duration,
+  }) = _VideoAd;
+
+  factory VideoAd.fromJson(Map<String, dynamic> json) =>
+      _$VideoAdFromJson(json);
 }

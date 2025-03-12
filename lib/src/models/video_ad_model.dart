@@ -15,14 +15,13 @@ class VideoAdModel with _$VideoAdModel {
     required DateTime createdAt,
     required String client,
     required String campaign,
-    required int duration, // JSON almacena la duración como `int`
+    required int duration,
   }) = _VideoAdModel;
 
   factory VideoAdModel.fromJson(Map<String, dynamic> json) =>
       _$VideoAdModelFromJson(json);
 }
 
-// 🔄 Agrega `mixin` con `toEntity()`
 extension VideoAdModelX on VideoAdModel {
   VideoAd toEntity() {
     return VideoAd(
