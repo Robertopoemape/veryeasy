@@ -6,6 +6,11 @@ part 'product_notifier.g.dart';
 
 @riverpod
 class ProductNotifier extends _$ProductNotifier {
+  @override
+  ProductState build() {
+    return const ProductState.initial([]);
+  }
+
   final List<Product> _staticProducts = [
     Product(name: 'iPhone 14', price: 999, image: 'assets/img/png/not-img.png'),
     Product(
@@ -21,11 +26,6 @@ class ProductNotifier extends _$ProductNotifier {
         price: 249,
         image: 'assets/img/png/not-img.png'),
   ];
-
-  @override
-  ProductState build() {
-    return const ProductState.initial([]);
-  }
 
   Future<void> fetchProducts() async {
     state = const ProductState.loading();
