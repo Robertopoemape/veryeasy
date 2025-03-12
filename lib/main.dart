@@ -12,7 +12,7 @@ void main() async {
 
   await dotenv.load(fileName: ".env");
   await FirebaseAppCheck.instance.activate(
-    androidProvider: AndroidProvider.debug, // Si usas debug, cambia a "debug"
+    androidProvider: AndroidProvider.debug,
   );
 
   runApp(
@@ -35,9 +35,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      routerDelegate: _appRouter.delegate(), // Delegado del enrutador
-      routeInformationParser:
-          _appRouter.defaultRouteParser(), // Analizador de rutas
+      routerDelegate: _appRouter.delegate(),
+      routeInformationParser: _appRouter.defaultRouteParser(),
     );
   }
 }
