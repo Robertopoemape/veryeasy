@@ -68,7 +68,10 @@ class HomeScreen extends ConsumerWidget {
           ),
         ],
       ),
-      body: screens[selectedIndex],
+      body: IndexedStack(
+        index: selectedIndex,
+        children: screens,
+      ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: selectedIndex,
         onTap: (index) => homeNotifier.setIndex(index),

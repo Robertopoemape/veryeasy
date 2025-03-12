@@ -13,22 +13,32 @@ class ProductScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(productProvider);
+    final state = ref.watch(productNotifierProvider);
+
+    if (state.maybeWhen(initial: (_) => true, orElse: () => false)) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        ref.read(productNotifierProvider.notifier).fetchProducts();
+      });
+    }
 
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(ds12),
         child: state.when(
+          initial: (products) => CompLoading(),
           loading: () => CompLoading(),
-          data: (products) => ProductGrid(products: products),
-          error: (error, _) => CompError(
-            message: error.toString(),
-            onPressed: () => ref.read(productProvider.notifier).fetchProducts(),
+          loaded: (products) => ProductGrid(products: products),
+          error: (message) => CompError(
+            message: message,
+            onPressed: () =>
+                ref.read(productNotifierProvider.notifier).fetchProducts(),
           ),
         ),
       ),
       floatingActionButton: CompFloactingActionButton(
-        onPressed: () => ref.read(productProvider.notifier).fetchProducts(),
+        heroTag: 'product_fab',
+        onPressed: () =>
+            ref.read(productNotifierProvider.notifier).fetchProducts(),
       ),
     );
   }

@@ -64,6 +64,7 @@ class VideoAdsScreen extends ConsumerWidget {
         error: (error, _) => Center(child: Text('Error: $error')),
       ),
       floatingActionButton: CompFloactingActionButton(
+        heroTag: 'video_ads_fab',
         onPressed: () => ref.read(videoAdNotifierProvider.notifier).refresh(),
       ),
     );
