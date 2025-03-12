@@ -16,7 +16,7 @@ class SplashScreen extends ConsumerWidget {
 
     Future.delayed(Duration(seconds: ints2), () {
       if (authService.currentUser != null) {
-        autoRouterReplace(context, HomeRoute());
+        autoRouterReplace(context, BaseHomeRoute());
       } else {
         autoRouterReplace(context, LoginRoute());
       }

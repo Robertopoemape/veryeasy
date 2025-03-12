@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:veryeasy/presentation/home/providers/home_notifier.dart';
+import 'package:veryeasy/presentation/base_home/providers/base_home_notifier.dart';
 
 import '../../../components/components.dart';
 import '../../../core/core.dart';
@@ -10,7 +10,7 @@ class DrawerWidget extends ConsumerWidget {
   const DrawerWidget({super.key});
 
   void _handleSignOut(BuildContext context, WidgetRef ref) {
-    final homeNotifier = ref.read(homeNotifierProvider.notifier);
+    final baseHomeNotifier = ref.read(baseHomeNotifierProvider.notifier);
     compShowDialogMessage(
       context,
       isReturn: true,
@@ -18,7 +18,7 @@ class DrawerWidget extends ConsumerWidget {
       message: '¿Estás seguro que deseas cerrar sesión?',
       label: 'Si',
       onPressed: () {
-        homeNotifier.logout();
+        baseHomeNotifier.logout();
         autoRouterReplace(context, LoginRoute());
       },
     );
@@ -45,7 +45,7 @@ class DrawerWidget extends ConsumerWidget {
             title: const Text('Inicio'),
             onTap: () {
               Navigator.pop(context);
-              autoRouterReplace(context, HomeRoute());
+              autoRouterReplace(context, BaseHomeRoute());
             },
           ),
           ListTile(

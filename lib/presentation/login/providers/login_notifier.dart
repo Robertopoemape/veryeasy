@@ -32,7 +32,7 @@ class LoginNotifier extends _$LoginNotifier {
       (user) async {
         if (user != null && context.mounted) {
           setUser(user);
-          context.replaceRoute(HomeRoute());
+          context.replaceRoute(BaseHomeRoute());
         }
       },
     );

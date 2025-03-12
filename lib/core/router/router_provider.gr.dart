@@ -11,13 +11,14 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:auto_route/auto_route.dart' as _i14;
 import 'package:flutter/material.dart' as _i15;
-import 'package:veryeasy/presentation/create_video/screens/create_video_screen.dart'
+import 'package:veryeasy/presentation/base_home/screens/base_home_screen.dart'
     as _i1;
-import 'package:veryeasy/presentation/dashboard/screens/dashboard_screen.dart'
+import 'package:veryeasy/presentation/create_video/screens/create_video_screen.dart'
     as _i2;
-import 'package:veryeasy/presentation/generator_ia/screens/generator_ia_screen.dart'
+import 'package:veryeasy/presentation/dashboard/screens/dashboard_screen.dart'
     as _i3;
-import 'package:veryeasy/presentation/home/screens/home_screen.dart' as _i4;
+import 'package:veryeasy/presentation/generator_ia/screens/generator_ia_screen.dart'
+    as _i4;
 import 'package:veryeasy/presentation/inventory/screens/inventory_screen.dart'
     as _i5;
 import 'package:veryeasy/presentation/login/screens/login_screen.dart' as _i6;
@@ -37,7 +38,23 @@ import 'package:veryeasy/presentation/video_detail/screens/video_detail_screen.d
     as _i13;
 
 /// generated route for
-/// [_i1.CreateVideoIAScreen]
+/// [_i1.BaseHomeScreen]
+class BaseHomeRoute extends _i14.PageRouteInfo<void> {
+  const BaseHomeRoute({List<_i14.PageRouteInfo>? children})
+    : super(BaseHomeRoute.name, initialChildren: children);
+
+  static const String name = 'BaseHomeRoute';
+
+  static _i14.PageInfo page = _i14.PageInfo(
+    name,
+    builder: (data) {
+      return const _i1.BaseHomeScreen();
+    },
+  );
+}
+
+/// generated route for
+/// [_i2.CreateVideoIAScreen]
 class CreateVideoIARoute extends _i14.PageRouteInfo<void> {
   const CreateVideoIARoute({List<_i14.PageRouteInfo>? children})
     : super(CreateVideoIARoute.name, initialChildren: children);
@@ -47,13 +64,13 @@ class CreateVideoIARoute extends _i14.PageRouteInfo<void> {
   static _i14.PageInfo page = _i14.PageInfo(
     name,
     builder: (data) {
-      return const _i1.CreateVideoIAScreen();
+      return const _i2.CreateVideoIAScreen();
     },
   );
 }
 
 /// generated route for
-/// [_i2.DashboardScreen]
+/// [_i3.DashboardScreen]
 class DashboardRoute extends _i14.PageRouteInfo<void> {
   const DashboardRoute({List<_i14.PageRouteInfo>? children})
     : super(DashboardRoute.name, initialChildren: children);
@@ -63,13 +80,13 @@ class DashboardRoute extends _i14.PageRouteInfo<void> {
   static _i14.PageInfo page = _i14.PageInfo(
     name,
     builder: (data) {
-      return const _i2.DashboardScreen();
+      return const _i3.DashboardScreen();
     },
   );
 }
 
 /// generated route for
-/// [_i3.GeneratorIAScreen]
+/// [_i4.GeneratorIAScreen]
 class GeneratorIARoute extends _i14.PageRouteInfo<void> {
   const GeneratorIARoute({List<_i14.PageRouteInfo>? children})
     : super(GeneratorIARoute.name, initialChildren: children);
@@ -79,23 +96,7 @@ class GeneratorIARoute extends _i14.PageRouteInfo<void> {
   static _i14.PageInfo page = _i14.PageInfo(
     name,
     builder: (data) {
-      return const _i3.GeneratorIAScreen();
-    },
-  );
-}
-
-/// generated route for
-/// [_i4.HomeScreen]
-class HomeRoute extends _i14.PageRouteInfo<void> {
-  const HomeRoute({List<_i14.PageRouteInfo>? children})
-    : super(HomeRoute.name, initialChildren: children);
-
-  static const String name = 'HomeRoute';
-
-  static _i14.PageInfo page = _i14.PageInfo(
-    name,
-    builder: (data) {
-      return const _i4.HomeScreen();
+      return const _i4.GeneratorIAScreen();
     },
   );
 }

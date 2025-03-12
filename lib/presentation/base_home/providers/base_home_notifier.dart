@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:veryeasy/presentation/home/providers/home_state.dart';
+import 'package:veryeasy/presentation/base_home/providers/base_home_state.dart';
 import 'package:veryeasy/presentation/inventory/screens/inventory_screen.dart';
 import '../../../core/core.dart';
 import '../../../core/router/router_provider.gr.dart';
@@ -10,13 +10,13 @@ import '../../generator_ia/screens/generator_ia_screen.dart';
 import '../../product_screens/screen/product_screen.dart';
 import '../../video_ads/screens/video_ads_screen.dart';
 
-part 'home_notifier.g.dart';
+part 'base_home_notifier.g.dart';
 
 @riverpod
-class HomeNotifier extends _$HomeNotifier {
+class BaseHomeNotifier extends _$BaseHomeNotifier {
   @override
-  HomeState build() {
-    return const HomeState(currentIndex: 0);
+  BaseHomeState build() {
+    return const BaseHomeState(currentIndex: 0);
   }
 
   final List<String> titles = [
