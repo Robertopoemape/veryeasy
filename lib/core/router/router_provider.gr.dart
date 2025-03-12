@@ -11,21 +11,21 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:auto_route/auto_route.dart' as _i14;
 import 'package:flutter/material.dart' as _i15;
-import 'package:veryeasy/presentation/configuration/screens/inventory_screen.dart'
-    as _i1;
 import 'package:veryeasy/presentation/create_video/screens/create_video_screen.dart'
-    as _i2;
+    as _i1;
 import 'package:veryeasy/presentation/dashboard/screens/dashboard_screen.dart'
-    as _i3;
+    as _i2;
 import 'package:veryeasy/presentation/generator_ia/screens/generator_ia_screen.dart'
-    as _i4;
-import 'package:veryeasy/presentation/home/screens/home_screen.dart' as _i5;
+    as _i3;
+import 'package:veryeasy/presentation/home/screens/home_screen.dart' as _i4;
 import 'package:veryeasy/presentation/inventory/screens/inventory_screen.dart'
-    as _i6;
-import 'package:veryeasy/presentation/login/screens/login_screen.dart' as _i7;
+    as _i5;
+import 'package:veryeasy/presentation/login/screens/login_screen.dart' as _i6;
 import 'package:veryeasy/presentation/product_detail/screens/product_detail_screen.dart'
-    as _i8;
+    as _i7;
 import 'package:veryeasy/presentation/product_screens/screen/product_screen.dart'
+    as _i8;
+import 'package:veryeasy/presentation/setting/screens/setting_screen.dart'
     as _i9;
 import 'package:veryeasy/presentation/splash/screens/splash_screen.dart'
     as _i10;
@@ -37,23 +37,7 @@ import 'package:veryeasy/presentation/video_detail/screens/video_detail_screen.d
     as _i13;
 
 /// generated route for
-/// [_i1.ConfigurationScreen]
-class ConfigurationRoute extends _i14.PageRouteInfo<void> {
-  const ConfigurationRoute({List<_i14.PageRouteInfo>? children})
-    : super(ConfigurationRoute.name, initialChildren: children);
-
-  static const String name = 'ConfigurationRoute';
-
-  static _i14.PageInfo page = _i14.PageInfo(
-    name,
-    builder: (data) {
-      return const _i1.ConfigurationScreen();
-    },
-  );
-}
-
-/// generated route for
-/// [_i2.CreateVideoIAScreen]
+/// [_i1.CreateVideoIAScreen]
 class CreateVideoIARoute extends _i14.PageRouteInfo<void> {
   const CreateVideoIARoute({List<_i14.PageRouteInfo>? children})
     : super(CreateVideoIARoute.name, initialChildren: children);
@@ -63,13 +47,13 @@ class CreateVideoIARoute extends _i14.PageRouteInfo<void> {
   static _i14.PageInfo page = _i14.PageInfo(
     name,
     builder: (data) {
-      return const _i2.CreateVideoIAScreen();
+      return const _i1.CreateVideoIAScreen();
     },
   );
 }
 
 /// generated route for
-/// [_i3.DashboardScreen]
+/// [_i2.DashboardScreen]
 class DashboardRoute extends _i14.PageRouteInfo<void> {
   const DashboardRoute({List<_i14.PageRouteInfo>? children})
     : super(DashboardRoute.name, initialChildren: children);
@@ -79,13 +63,13 @@ class DashboardRoute extends _i14.PageRouteInfo<void> {
   static _i14.PageInfo page = _i14.PageInfo(
     name,
     builder: (data) {
-      return const _i3.DashboardScreen();
+      return const _i2.DashboardScreen();
     },
   );
 }
 
 /// generated route for
-/// [_i4.GeneratorIAScreen]
+/// [_i3.GeneratorIAScreen]
 class GeneratorIARoute extends _i14.PageRouteInfo<void> {
   const GeneratorIARoute({List<_i14.PageRouteInfo>? children})
     : super(GeneratorIARoute.name, initialChildren: children);
@@ -95,13 +79,13 @@ class GeneratorIARoute extends _i14.PageRouteInfo<void> {
   static _i14.PageInfo page = _i14.PageInfo(
     name,
     builder: (data) {
-      return const _i4.GeneratorIAScreen();
+      return const _i3.GeneratorIAScreen();
     },
   );
 }
 
 /// generated route for
-/// [_i5.HomeScreen]
+/// [_i4.HomeScreen]
 class HomeRoute extends _i14.PageRouteInfo<void> {
   const HomeRoute({List<_i14.PageRouteInfo>? children})
     : super(HomeRoute.name, initialChildren: children);
@@ -111,13 +95,13 @@ class HomeRoute extends _i14.PageRouteInfo<void> {
   static _i14.PageInfo page = _i14.PageInfo(
     name,
     builder: (data) {
-      return const _i5.HomeScreen();
+      return const _i4.HomeScreen();
     },
   );
 }
 
 /// generated route for
-/// [_i6.InventoryScreen]
+/// [_i5.InventoryScreen]
 class InventoryRoute extends _i14.PageRouteInfo<void> {
   const InventoryRoute({List<_i14.PageRouteInfo>? children})
     : super(InventoryRoute.name, initialChildren: children);
@@ -127,13 +111,13 @@ class InventoryRoute extends _i14.PageRouteInfo<void> {
   static _i14.PageInfo page = _i14.PageInfo(
     name,
     builder: (data) {
-      return const _i6.InventoryScreen();
+      return const _i5.InventoryScreen();
     },
   );
 }
 
 /// generated route for
-/// [_i7.LoginScreen]
+/// [_i6.LoginScreen]
 class LoginRoute extends _i14.PageRouteInfo<LoginRouteArgs> {
   LoginRoute({_i15.Key? key, List<_i14.PageRouteInfo>? children})
     : super(
@@ -150,7 +134,7 @@ class LoginRoute extends _i14.PageRouteInfo<LoginRouteArgs> {
       final args = data.argsAs<LoginRouteArgs>(
         orElse: () => const LoginRouteArgs(),
       );
-      return _i7.LoginScreen(key: args.key);
+      return _i6.LoginScreen(key: args.key);
     },
   );
 }
@@ -167,7 +151,7 @@ class LoginRouteArgs {
 }
 
 /// generated route for
-/// [_i8.ProductDetailScreen]
+/// [_i7.ProductDetailScreen]
 class ProductDetailRoute extends _i14.PageRouteInfo<void> {
   const ProductDetailRoute({List<_i14.PageRouteInfo>? children})
     : super(ProductDetailRoute.name, initialChildren: children);
@@ -177,13 +161,13 @@ class ProductDetailRoute extends _i14.PageRouteInfo<void> {
   static _i14.PageInfo page = _i14.PageInfo(
     name,
     builder: (data) {
-      return const _i8.ProductDetailScreen();
+      return const _i7.ProductDetailScreen();
     },
   );
 }
 
 /// generated route for
-/// [_i9.ProductScreen]
+/// [_i8.ProductScreen]
 class ProductRoute extends _i14.PageRouteInfo<void> {
   const ProductRoute({List<_i14.PageRouteInfo>? children})
     : super(ProductRoute.name, initialChildren: children);
@@ -193,7 +177,23 @@ class ProductRoute extends _i14.PageRouteInfo<void> {
   static _i14.PageInfo page = _i14.PageInfo(
     name,
     builder: (data) {
-      return const _i9.ProductScreen();
+      return const _i8.ProductScreen();
+    },
+  );
+}
+
+/// generated route for
+/// [_i9.SettingScreen]
+class SettingRoute extends _i14.PageRouteInfo<void> {
+  const SettingRoute({List<_i14.PageRouteInfo>? children})
+    : super(SettingRoute.name, initialChildren: children);
+
+  static const String name = 'SettingRoute';
+
+  static _i14.PageInfo page = _i14.PageInfo(
+    name,
+    builder: (data) {
+      return const _i9.SettingScreen();
     },
   );
 }

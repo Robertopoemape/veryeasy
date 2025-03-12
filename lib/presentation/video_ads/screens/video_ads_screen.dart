@@ -17,18 +17,6 @@ class VideoAdsScreen extends ConsumerWidget {
     final videoAdsAsync = ref.watch(videoAdNotifierProvider);
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Video Ads'),
-        actions: [
-          IconButton(
-            onPressed: () => autoRouterPush(
-              context,
-              UploadVideoRoute(),
-            ),
-            icon: const Icon(Icons.add),
-          )
-        ],
-      ),
       body: videoAdsAsync.when(
         data: (videos) => videos.isEmpty
             ? Column(

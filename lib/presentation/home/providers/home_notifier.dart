@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'home_state.dart';
+import 'package:veryeasy/presentation/home/providers/home_state.dart';
+import 'package:veryeasy/presentation/inventory/screens/inventory_screen.dart';
+import '../../../core/core.dart';
+import '../../../core/router/router_provider.gr.dart';
+import '../../../src/services/auth/auth_service.dart';
+
 import '../../generator_ia/screens/generator_ia_screen.dart';
 import '../../product_screens/screen/product_screen.dart';
 import '../../video_ads/screens/video_ads_screen.dart';
@@ -26,11 +31,55 @@ class HomeNotifier extends _$HomeNotifier {
     Center(child: Text('Inicio')),
     VideoAdsScreen(),
     ProductScreen(),
-    Center(child: Text('Inventario')),
+    InventoryScreen(),
     GeneratorIAScreen(),
   ];
 
+  List<List<Widget>> appBarActions(BuildContext context) => [
+        [],
+        [
+          IconButton(
+            onPressed: () => autoRouterPush(
+              context,
+              UploadVideoRoute(),
+            ),
+            icon: Icon(Icons.add),
+          ),
+        ],
+        [
+          IconButton(
+            onPressed: () {},
+            icon: Icon(Icons.search),
+          ),
+          IconButton(
+            onPressed: () {},
+            icon: Icon(Icons.shopping_cart_checkout_sharp),
+          ),
+        ],
+        [
+          IconButton(
+            onPressed: () {},
+            icon: Icon(Icons.edit),
+          ),
+          IconButton(
+            onPressed: () {},
+            icon: Icon(Icons.delete),
+          ),
+        ],
+        [
+          IconButton(
+            onPressed: () {},
+            icon: Icon(Icons.settings),
+          ),
+        ],
+      ];
+
   void setIndex(int index) {
     state = state.copyWith(currentIndex: index);
+  }
+
+  Future<void> logout() async {
+    final authService = ref.read(authServiceProvider);
+    authService.signOut();
   }
 }

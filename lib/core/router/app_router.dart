@@ -17,7 +17,7 @@ class MicroAppRouter extends RootStackRouter {
         AutoRoute(page: ProductRoute.page),
         AutoRoute(page: InventoryRoute.page),
         AutoRoute(page: GeneratorIARoute.page),
-        AutoRoute(page: ConfigurationRoute.page),
+        AutoRoute(page: SettingRoute.page),
         AutoRoute(page: VideoDetailRoute.page),
         AutoRoute(page: ProductDetailRoute.page),
         AutoRoute(page: CreateVideoIARoute.page),

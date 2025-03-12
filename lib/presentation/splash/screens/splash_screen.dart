@@ -1,7 +1,6 @@
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:veryeasy/core/router/router.dart';
 import 'package:veryeasy/core/router/router_provider.gr.dart';
 
 import '../../../core/core.dart';

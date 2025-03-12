@@ -1,30 +1,13 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../components/components.dart';
 import '../../../core/core.dart';
-import '../../../core/router/router_provider.gr.dart';
-import '../../../src/services/auth/auth_service.dart';
 import '../providers/home_notifier.dart';
+import '../widgets/drawer_widget.dart';
 
 @RoutePage()
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
-
-  void _handleSignOut(BuildContext context, WidgetRef ref) {
-    final authService = ref.read(authServiceProvider);
-    compShowDialogMessage(
-      context,
-      isReturn: true,
-      title: 'Cerrar Sesión',
-      message: '¿Estás seguro que deseas cerrar sesión?',
-      label: 'Si',
-      onPressed: () {
-        authService.signOut();
-        autoRouterReplace(context, LoginRoute());
-      },
-    );
-  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -33,6 +16,7 @@ class HomeScreen extends ConsumerWidget {
     final currentIndex = homeState.currentIndex;
 
     return Scaffold(
+      drawer: DrawerWidget(),
       appBar: AppBar(
         backgroundColor: ComColors.primaryColor,
         title: Text(
@@ -43,14 +27,14 @@ class HomeScreen extends ConsumerWidget {
           ),
         ),
         centerTitle: true,
+        leading: Builder(builder: (context) {
+          return IconButton(
+            onPressed: () => Scaffold.of(context).openDrawer(),
+            icon: Icon(Icons.menu),
+          );
+        }),
         actions: [
-          IconButton(
-            onPressed: () => _handleSignOut(context, ref),
-            icon: const Icon(
-              Icons.logout,
-              color: Colors.white,
-            ),
-          ),
+          ...homeNotifier.appBarActions(context)[currentIndex],
         ],
       ),
       body: IndexedStack(
