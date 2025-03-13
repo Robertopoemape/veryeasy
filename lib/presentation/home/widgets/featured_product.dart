@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/core.dart';
-import '../../product_screens/providers/product_notifier.dart';
-import '../../product_screens/widgets/product_grid.dart';
+import '../../product/providers/product_notifier.dart';
+import '../../product/widgets/product_grid.dart';
 import 'subtitle_category.dart';
 
 class FeaturedProduct extends ConsumerWidget {

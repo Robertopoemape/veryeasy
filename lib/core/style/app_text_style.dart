@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:veryeasy/core/style/app_colors.dart';
 
-const String font = 'Poppins';
+const String font = 'Roboto';
 const String fontFamily = 'Furious';
 
 const TextStyle textStyle = TextStyle(
@@ -21,6 +21,7 @@ const double _display48Size = 48;
 const double _display36Size = 36;
 const double _display34Size = 34;
 const double _display24Size = 24;
+const double _display22Size = 22;
 const double _display20Size = 20;
 const double _display16Size = 16;
 const double _display14Size = 14;
@@ -166,6 +167,10 @@ abstract class ComTextStyle {
   static TextStyle h6 = textStyle.copyWith(
     fontSize: _display20Size,
     fontWeight: FontWeight.w900,
+  );
+  static TextStyle title = textStyle.copyWith(
+    fontSize: _display22Size,
+    fontWeight: FontWeight.w500,
   );
   static TextStyle subtitle1 = textStyle.copyWith(
     fontSize: _display16Size,

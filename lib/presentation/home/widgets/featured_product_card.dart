@@ -40,8 +40,7 @@ class FeaturedProductCard extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               maxLines: ints2,
             ),
-            Text(price,
-                style: const TextStyle(fontSize: 14, color: Colors.green)),
+            Text(price, style: ComTextStyle.caption),
             const Spacer(),
             CompButton(
               name: 'Comprar',

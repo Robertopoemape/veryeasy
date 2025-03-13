@@ -25,10 +25,10 @@ class HomeScreen extends ConsumerWidget {
             gap20,
             FeaturedProduct(),
             SizedBox(
-              height: 100,
+              height: ds100,
               child: ListView(
                 scrollDirection: Axis.horizontal,
-                padding: const EdgeInsets.symmetric(horizontal: 16),
+                padding: const EdgeInsets.symmetric(horizontal: ds16),
                 children: [
                   _buildNewsCard('Nueva colección de verano',
                       'assets/img/png/not-img.png'),
@@ -54,27 +54,24 @@ class HomeScreen extends ConsumerWidget {
 
   Widget _buildNewsCard(String title, String image) {
     return Container(
-      width: 200,
-      margin: const EdgeInsets.only(right: 10),
+      width: ds200,
+      margin: const EdgeInsets.only(right: ds10),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(ds10),
         image: DecorationImage(image: AssetImage(image), fit: BoxFit.cover),
       ),
       child: Container(
         alignment: Alignment.bottomLeft,
-        padding: const EdgeInsets.all(10),
+        padding: const EdgeInsets.all(ds10),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(ds10),
           gradient: LinearGradient(
-            colors: [Colors.black.withOpacity(0.7), Colors.transparent],
+            colors: [Colors.black.withOpacity(ds07), Colors.transparent],
             begin: Alignment.bottomCenter,
             end: Alignment.topCenter,
           ),
         ),
-        child: Text(
-          title,
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-        ),
+        child: Text(title, style: ComTextStyle.body2.w800.white),
       ),
     );
   }

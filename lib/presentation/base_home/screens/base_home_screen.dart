@@ -19,13 +19,8 @@ class BaseHomeScreen extends ConsumerWidget {
       drawer: DrawerWidget(),
       appBar: AppBar(
         backgroundColor: ComColors.primaryColor,
-        title: Text(
-          baseHomeNotifier.titles[currentIndex],
-          style: const TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
+        title: Text(baseHomeNotifier.titles[currentIndex],
+            style: ComTextStyle.title.w700),
         centerTitle: true,
         leading: Builder(builder: (context) {
           return IconButton(

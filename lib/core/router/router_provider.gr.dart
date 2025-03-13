@@ -24,7 +24,7 @@ import 'package:veryeasy/presentation/inventory/screens/inventory_screen.dart'
 import 'package:veryeasy/presentation/login/screens/login_screen.dart' as _i6;
 import 'package:veryeasy/presentation/product_detail/screens/product_detail_screen.dart'
     as _i7;
-import 'package:veryeasy/presentation/product_screens/screen/product_screen.dart'
+import 'package:veryeasy/presentation/product/screen/product_screen.dart'
     as _i8;
 import 'package:veryeasy/presentation/setting/screens/setting_screen.dart'
     as _i9;
@@ -41,7 +41,7 @@ import 'package:veryeasy/presentation/video_detail/screens/video_detail_screen.d
 /// [_i1.BaseHomeScreen]
 class BaseHomeRoute extends _i14.PageRouteInfo<void> {
   const BaseHomeRoute({List<_i14.PageRouteInfo>? children})
-    : super(BaseHomeRoute.name, initialChildren: children);
+      : super(BaseHomeRoute.name, initialChildren: children);
 
   static const String name = 'BaseHomeRoute';
 
@@ -57,7 +57,7 @@ class BaseHomeRoute extends _i14.PageRouteInfo<void> {
 /// [_i2.CreateVideoIAScreen]
 class CreateVideoIARoute extends _i14.PageRouteInfo<void> {
   const CreateVideoIARoute({List<_i14.PageRouteInfo>? children})
-    : super(CreateVideoIARoute.name, initialChildren: children);
+      : super(CreateVideoIARoute.name, initialChildren: children);
 
   static const String name = 'CreateVideoIARoute';
 
@@ -73,7 +73,7 @@ class CreateVideoIARoute extends _i14.PageRouteInfo<void> {
 /// [_i3.DashboardScreen]
 class DashboardRoute extends _i14.PageRouteInfo<void> {
   const DashboardRoute({List<_i14.PageRouteInfo>? children})
-    : super(DashboardRoute.name, initialChildren: children);
+      : super(DashboardRoute.name, initialChildren: children);
 
   static const String name = 'DashboardRoute';
 
@@ -89,7 +89,7 @@ class DashboardRoute extends _i14.PageRouteInfo<void> {
 /// [_i4.GeneratorIAScreen]
 class GeneratorIARoute extends _i14.PageRouteInfo<void> {
   const GeneratorIARoute({List<_i14.PageRouteInfo>? children})
-    : super(GeneratorIARoute.name, initialChildren: children);
+      : super(GeneratorIARoute.name, initialChildren: children);
 
   static const String name = 'GeneratorIARoute';
 
@@ -105,7 +105,7 @@ class GeneratorIARoute extends _i14.PageRouteInfo<void> {
 /// [_i5.InventoryScreen]
 class InventoryRoute extends _i14.PageRouteInfo<void> {
   const InventoryRoute({List<_i14.PageRouteInfo>? children})
-    : super(InventoryRoute.name, initialChildren: children);
+      : super(InventoryRoute.name, initialChildren: children);
 
   static const String name = 'InventoryRoute';
 
@@ -121,11 +121,11 @@ class InventoryRoute extends _i14.PageRouteInfo<void> {
 /// [_i6.LoginScreen]
 class LoginRoute extends _i14.PageRouteInfo<LoginRouteArgs> {
   LoginRoute({_i15.Key? key, List<_i14.PageRouteInfo>? children})
-    : super(
-        LoginRoute.name,
-        args: LoginRouteArgs(key: key),
-        initialChildren: children,
-      );
+      : super(
+          LoginRoute.name,
+          args: LoginRouteArgs(key: key),
+          initialChildren: children,
+        );
 
   static const String name = 'LoginRoute';
 
@@ -155,7 +155,7 @@ class LoginRouteArgs {
 /// [_i7.ProductDetailScreen]
 class ProductDetailRoute extends _i14.PageRouteInfo<void> {
   const ProductDetailRoute({List<_i14.PageRouteInfo>? children})
-    : super(ProductDetailRoute.name, initialChildren: children);
+      : super(ProductDetailRoute.name, initialChildren: children);
 
   static const String name = 'ProductDetailRoute';
 
@@ -171,7 +171,7 @@ class ProductDetailRoute extends _i14.PageRouteInfo<void> {
 /// [_i8.ProductScreen]
 class ProductRoute extends _i14.PageRouteInfo<void> {
   const ProductRoute({List<_i14.PageRouteInfo>? children})
-    : super(ProductRoute.name, initialChildren: children);
+      : super(ProductRoute.name, initialChildren: children);
 
   static const String name = 'ProductRoute';
 
@@ -187,7 +187,7 @@ class ProductRoute extends _i14.PageRouteInfo<void> {
 /// [_i9.SettingScreen]
 class SettingRoute extends _i14.PageRouteInfo<void> {
   const SettingRoute({List<_i14.PageRouteInfo>? children})
-    : super(SettingRoute.name, initialChildren: children);
+      : super(SettingRoute.name, initialChildren: children);
 
   static const String name = 'SettingRoute';
 
@@ -203,7 +203,7 @@ class SettingRoute extends _i14.PageRouteInfo<void> {
 /// [_i10.SplashScreen]
 class SplashRoute extends _i14.PageRouteInfo<void> {
   const SplashRoute({List<_i14.PageRouteInfo>? children})
-    : super(SplashRoute.name, initialChildren: children);
+      : super(SplashRoute.name, initialChildren: children);
 
   static const String name = 'SplashRoute';
 
@@ -219,7 +219,7 @@ class SplashRoute extends _i14.PageRouteInfo<void> {
 /// [_i11.UploadVideoScreen]
 class UploadVideoRoute extends _i14.PageRouteInfo<void> {
   const UploadVideoRoute({List<_i14.PageRouteInfo>? children})
-    : super(UploadVideoRoute.name, initialChildren: children);
+      : super(UploadVideoRoute.name, initialChildren: children);
 
   static const String name = 'UploadVideoRoute';
 
@@ -235,7 +235,7 @@ class UploadVideoRoute extends _i14.PageRouteInfo<void> {
 /// [_i12.VideoAdsScreen]
 class VideoAdsRoute extends _i14.PageRouteInfo<void> {
   const VideoAdsRoute({List<_i14.PageRouteInfo>? children})
-    : super(VideoAdsRoute.name, initialChildren: children);
+      : super(VideoAdsRoute.name, initialChildren: children);
 
   static const String name = 'VideoAdsRoute';
 
@@ -251,7 +251,7 @@ class VideoAdsRoute extends _i14.PageRouteInfo<void> {
 /// [_i13.VideoDetailScreen]
 class VideoDetailRoute extends _i14.PageRouteInfo<void> {
   const VideoDetailRoute({List<_i14.PageRouteInfo>? children})
-    : super(VideoDetailRoute.name, initialChildren: children);
+      : super(VideoDetailRoute.name, initialChildren: children);
 
   static const String name = 'VideoDetailRoute';
 

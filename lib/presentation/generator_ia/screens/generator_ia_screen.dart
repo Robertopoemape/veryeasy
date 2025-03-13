@@ -5,6 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:uuid/uuid.dart';
+import 'package:veryeasy/core/core.dart';
+
+import '../../../components/components.dart';
 
 @RoutePage()
 class GeneratorIAScreen extends StatefulWidget {
@@ -105,23 +108,23 @@ class _GeneratorIAScreenState extends State<GeneratorIAScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(ds16),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const Text(
+            Text(
               'Presiona el botón para generar un video con IA',
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 18),
+              style: ComTextStyle.h6.w500,
             ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: isLoading ? null : generateVideo,
-              child: isLoading
-                  ? const CircularProgressIndicator(color: Colors.white)
-                  : const Text('Generar Video'),
-            ),
+            gap20,
+            CompButton(
+                name: 'Generar video',
+                width: 140,
+                onPressed: () async {
+                  await generateVideo();
+                }),
           ],
         ),
       ),

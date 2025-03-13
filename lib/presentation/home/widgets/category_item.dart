@@ -20,13 +20,13 @@ class CategoryItem extends StatelessWidget {
           margin: const EdgeInsets.only(right: ds16),
           padding: const EdgeInsets.all(ds12),
           decoration: BoxDecoration(
-            color: Colors.deepPurpleAccent.withOpacity(0.1),
+            color: Colors.deepPurpleAccent.withOpacity(ds01),
             shape: BoxShape.circle,
           ),
           child: Icon(icon, size: ds30, color: Colors.deepPurple),
         ),
         gap6,
-        Text(title, style: const TextStyle(fontSize: 14)),
+        Text(title, style: ComTextStyle.button1.w500),
       ],
     );
   }

@@ -8,7 +8,7 @@ import '../../../src/services/auth/auth_service.dart';
 
 import '../../generator_ia/screens/generator_ia_screen.dart';
 import '../../home/screens/home_screen.dart';
-import '../../product_screens/screen/product_screen.dart';
+import '../../product/screen/product_screen.dart';
 import '../../video_ads/screens/video_ads_screen.dart';
 
 part 'base_home_notifier.g.dart';
