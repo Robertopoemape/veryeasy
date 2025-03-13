@@ -40,16 +40,33 @@ class BaseHomeScreen extends ConsumerWidget {
         type: BottomNavigationBarType.fixed,
         currentIndex: currentIndex,
         onTap: baseHomeNotifier.setIndex,
-        unselectedItemColor: ComColors.green400,
+        unselectedItemColor: ComColors.green600,
         selectedItemColor: ComColors.primaryColor,
         items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.dashboard), label: 'Inicio'),
           BottomNavigationBarItem(
-              icon: Icon(Icons.video_library), label: 'Videos'),
-          BottomNavigationBarItem(icon: Icon(Icons.store), label: 'Productos'),
+            tooltip: 'Inicio',
+            icon: Icon(Icons.dashboard),
+            label: 'Inicio',
+          ),
           BottomNavigationBarItem(
-              icon: Icon(Icons.inventory), label: 'Inventario'),
-          BottomNavigationBarItem(icon: Icon(Icons.smart_display), label: 'IA'),
+            tooltip: 'Videos',
+            icon: Icon(Icons.video_library),
+            label: 'Videos',
+          ),
+          BottomNavigationBarItem(
+              tooltip: 'Productos',
+              icon: Icon(Icons.store),
+              label: 'Productos'),
+          BottomNavigationBarItem(
+            tooltip: 'Inventario',
+            icon: Icon(Icons.inventory),
+            label: 'Inventario',
+          ),
+          BottomNavigationBarItem(
+            tooltip: 'IA',
+            icon: Icon(Icons.smart_display),
+            label: 'IA',
+          ),
         ],
       ),
     );
