@@ -21,14 +21,16 @@ class ProductCard extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          ClipRRect(
-            borderRadius:
-                const BorderRadius.vertical(top: Radius.circular(ds12)),
-            child: Image.asset(
-              product.image,
-              height: ds150,
-              width: double.infinity,
-              fit: BoxFit.cover,
+          Container(
+            alignment: Alignment.center,
+            height: ds120,
+            child: ClipRRect(
+              borderRadius:
+                  const BorderRadius.vertical(top: Radius.circular(ds12)),
+              child: Image.asset(
+                product.image,
+                fit: BoxFit.cover,
+              ),
             ),
           ),
           Padding(
@@ -40,7 +42,7 @@ class ProductCard extends StatelessWidget {
                   product.name,
                   style: ComTextStyle.body2,
                   overflow: TextOverflow.ellipsis,
-                  maxLines: 2,
+                  maxLines: ints2,
                 ),
                 gap4,
                 Text(
@@ -49,6 +51,8 @@ class ProductCard extends StatelessWidget {
                 ),
                 gap8,
                 CompButton(
+                  paddingContent: EdgeInsets.zero,
+                  height: ds30,
                   name: 'Comprar',
                   borderColor: ComColors.primaryColor,
                   backgroundColor: ComColors.primaryColor,

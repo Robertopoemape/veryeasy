@@ -6,5 +6,5 @@ part 'base_home_state.freezed.dart';
 class BaseHomeState with _$BaseHomeState {
   const factory BaseHomeState({
     required int currentIndex,
-  }) = _HBaseHomeState;
+  }) = _BaseHomeState;
 }

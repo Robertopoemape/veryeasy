@@ -22,7 +22,7 @@ class ProductGrid extends StatelessWidget {
               runSpacing: ds12,
               children: products.map((product) {
                 return SizedBox(
-                  width: MediaQuery.of(context).size.width / 2 - ds12 * 1.5,
+                  width: MediaQuery.of(context).size.width / ds2 - ds12 * 1.5,
                   child: ProductCard(
                     product: product,
                     onPressedShoop: () {},

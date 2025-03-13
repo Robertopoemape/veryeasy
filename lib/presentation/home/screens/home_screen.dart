@@ -1,0 +1,81 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:veryeasy/presentation/home/widgets/category_card.dart';
+import '../../../components/components.dart';
+import '../../../core/core.dart';
+import '../providers/home_notifier.dart';
+import '../widgets/carousel_slider_widget.dart';
+import '../widgets/featured_product.dart';
+
+class HomeScreen extends ConsumerWidget {
+  const HomeScreen({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final baseHomeNotifier = ref.read(homeNotifierProvider.notifier);
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            CarouselSliderWidget(),
+            gap20,
+            CategoryCard(),
+            gap20,
+            FeaturedProduct(),
+            SizedBox(
+              height: 100,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                children: [
+                  _buildNewsCard('Nueva colección de verano',
+                      'assets/img/png/not-img.png'),
+                  _buildNewsCard(
+                      'Lanzamiento de iPhone 15', 'assets/img/png/not-img.png'),
+                  _buildNewsCard(
+                      'Descuentos en tecnología', 'assets/img/png/not-img.png'),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+      floatingActionButton: CompFloactingActionButton(
+        heroTag: 'whatsapp_fab',
+        widget: FaIcon(FontAwesomeIcons.whatsapp),
+        onPressed: () {
+          baseHomeNotifier.launchWhatsApp();
+        },
+      ),
+    );
+  }
+
+  Widget _buildNewsCard(String title, String image) {
+    return Container(
+      width: 200,
+      margin: const EdgeInsets.only(right: 10),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        image: DecorationImage(image: AssetImage(image), fit: BoxFit.cover),
+      ),
+      child: Container(
+        alignment: Alignment.bottomLeft,
+        padding: const EdgeInsets.all(10),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          gradient: LinearGradient(
+            colors: [Colors.black.withOpacity(0.7), Colors.transparent],
+            begin: Alignment.bottomCenter,
+            end: Alignment.topCenter,
+          ),
+        ),
+        child: Text(
+          title,
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+        ),
+      ),
+    );
+  }
+}

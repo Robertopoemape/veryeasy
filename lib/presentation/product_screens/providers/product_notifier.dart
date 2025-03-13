@@ -11,7 +11,7 @@ class ProductNotifier extends _$ProductNotifier {
     return const ProductState.initial([]);
   }
 
-  final List<Product> _staticProducts = [
+  final List<Product> staticProducts = [
     Product(name: 'iPhone 14', price: 999, image: 'assets/img/png/not-img.png'),
     Product(
         name: 'MacBook Pro', price: 1999, image: 'assets/img/png/not-img.png'),
@@ -31,7 +31,7 @@ class ProductNotifier extends _$ProductNotifier {
     state = const ProductState.loading();
     try {
       await Future.delayed(const Duration(seconds: 1));
-      state = ProductState.loaded(_staticProducts);
+      state = ProductState.loaded(staticProducts);
     } catch (e) {
       state = ProductState.error(e.toString());
     }
