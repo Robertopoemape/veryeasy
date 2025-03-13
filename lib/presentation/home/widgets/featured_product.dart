@@ -21,7 +21,7 @@ class FeaturedProduct extends ConsumerWidget {
         ),
         gap10,
         Padding(
-          padding: const EdgeInsets.all(ds12),
+          padding: const EdgeInsets.symmetric(horizontal: ds12),
           child: ProductGrid(products: productNotifier.staticProducts),
         ),
       ],

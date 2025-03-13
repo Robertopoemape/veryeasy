@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:veryeasy/presentation/home/widgets/category_card.dart';
+import 'package:veryeasy/presentation/home/widgets/the_new.dart';
 import '../../../components/components.dart';
 import '../../../core/core.dart';
 import '../providers/home_notifier.dart';
@@ -24,21 +25,8 @@ class HomeScreen extends ConsumerWidget {
             CategoryCard(),
             gap20,
             FeaturedProduct(),
-            SizedBox(
-              height: ds100,
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                padding: const EdgeInsets.symmetric(horizontal: ds16),
-                children: [
-                  _buildNewsCard('Nueva colección de verano',
-                      'assets/img/png/not-img.png'),
-                  _buildNewsCard(
-                      'Lanzamiento de iPhone 15', 'assets/img/png/not-img.png'),
-                  _buildNewsCard(
-                      'Descuentos en tecnología', 'assets/img/png/not-img.png'),
-                ],
-              ),
-            ),
+            gap20,
+            TheNew()
           ],
         ),
       ),
@@ -48,30 +36,6 @@ class HomeScreen extends ConsumerWidget {
         onPressed: () {
           baseHomeNotifier.launchWhatsApp();
         },
-      ),
-    );
-  }
-
-  Widget _buildNewsCard(String title, String image) {
-    return Container(
-      width: ds200,
-      margin: const EdgeInsets.only(right: ds10),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(ds10),
-        image: DecorationImage(image: AssetImage(image), fit: BoxFit.cover),
-      ),
-      child: Container(
-        alignment: Alignment.bottomLeft,
-        padding: const EdgeInsets.all(ds10),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(ds10),
-          gradient: LinearGradient(
-            colors: [Colors.black.withOpacity(ds07), Colors.transparent],
-            begin: Alignment.bottomCenter,
-            end: Alignment.topCenter,
-          ),
-        ),
-        child: Text(title, style: ComTextStyle.body2.w800.white),
       ),
     );
   }
