@@ -66,6 +66,7 @@ const double ds48 = 48;
 const double ds50 = 50;
 const double ds53 = 53;
 const double ds60 = 60;
+const double ds64 = 64;
 const double ds80 = 80;
 const double ds90 = 90;
 const double ds100 = 100;

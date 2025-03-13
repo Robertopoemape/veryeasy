@@ -15,7 +15,11 @@ class ProductGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return products.isEmpty
-        ? Center(child: Text('No hay productos disponibles.'))
+        ? Center(
+            child: Text(
+            'No hay productos disponibles.',
+            style: ComTextStyle.h6.w500,
+          ))
         : SingleChildScrollView(
             child: Wrap(
               spacing: ds12,

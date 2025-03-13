@@ -1,12 +1,12 @@
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:url_launcher/url_launcher.dart';
-import 'package:veryeasy/core/router/router_provider.gr.dart';
 
 import '../../../components/components.dart';
-import '../../../core/router/router.dart';
+import '../../../src/src.dart';
 import '../providers/video_ad_notifier.dart';
+import '../widgets/video_ads_empty.dart';
+import '../widgets/video_grid.dart';
 
 @RoutePage()
 class VideoAdsScreen extends ConsumerWidget {
@@ -15,46 +15,28 @@ class VideoAdsScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final videoAdsAsync = ref.watch(videoAdNotifierProvider);
+    final video = ref.read(videoAdNotifierProvider.notifier);
 
     return Scaffold(
-      body: videoAdsAsync.when(
-        data: (videos) => videos.isEmpty
-            ? Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Center(child: Text('No hay anuncios disponibles')),
-                  ElevatedButton(
-                    onPressed: () {
-                      autoRouterPush(context, UploadVideoRoute());
-                    },
-                    child: const Text('Subir Anuncio'),
-                  )
-                ],
-              )
-            : ListView.builder(
-                itemCount: videos.length,
-                itemBuilder: (context, index) => ListTile(
-                  title: Text(videos[index].title),
-                  subtitle: Text(videos[index].description),
-                  onTap: () async {
-                    final url = Uri.parse(videos[index].videoUrl);
-                    if (await canLaunchUrl(url)) {
-                      await launchUrl(url);
-                    } else {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('No se pudo abrir el video')),
-                      );
-                    }
-                  },
-                ),
-              ),
-        loading: () => const Center(child: CircularProgressIndicator()),
-        error: (error, _) => Center(child: Text('Error: $error')),
-      ),
+      body: _buildBody(context, videoAdsAsync, video),
       floatingActionButton: CompFloactingActionButton(
         heroTag: 'video_ads_fab',
-        onPressed: () => ref.read(videoAdNotifierProvider.notifier).refresh(),
+        onPressed: () => video.refresh(),
       ),
+    );
+  }
+
+  Widget _buildBody(BuildContext context,
+      AsyncValue<List<VideoAd>> videoAdsAsync, VideoAdNotifier video) {
+    return videoAdsAsync.when(
+      data: (videos) => videos.isEmpty
+          ? VideoAdsEmpty(
+              context: context,
+            )
+          : VideoGrid(videos: videos),
+      loading: () => CompLoading(),
+      error: (error, _) => CompError(
+          message: error.toString(), onPressed: () => video.refresh()),
     );
   }
 }

@@ -1,4 +1,6 @@
+import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../../src/entities/video_ad.dart';
 import '../../../src/models/video_ad_model.dart';
 import '../../../src/repositories/video_ads/remote/video_ad_repository.dart';
@@ -34,5 +36,16 @@ class VideoAdNotifier extends _$VideoAdNotifier {
     } catch (e, st) {
       state = AsyncError(e.toString(), st);
     }
+  }
+
+  Future<void> launchVideoUrl(BuildContext context, String videoUrl) async {
+    final url = Uri.tryParse(videoUrl);
+    if (url == null || !await canLaunchUrl(url)) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('No se pudo abrir el video')),
+      );
+      return;
+    }
+    await launchUrl(url);
   }
 }
