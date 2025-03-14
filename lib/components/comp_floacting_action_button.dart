@@ -5,14 +5,14 @@ import '../core/core.dart';
 class CompFloactingActionButton extends StatelessWidget {
   const CompFloactingActionButton({
     required this.onPressed,
-    this.widget = const Icon(Icons.refresh),
-    this.heroTag,
+    required this.heroTag,
+    this.widgetIcon = const Icon(Icons.refresh),
     super.key,
   });
 
   final VoidCallback onPressed;
-  final Object? heroTag;
-  final Widget widget;
+  final Object heroTag;
+  final Widget widgetIcon;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,7 @@ class CompFloactingActionButton extends StatelessWidget {
       ),
       onPressed: onPressed,
       heroTag: heroTag,
-      child: widget,
+      child: widgetIcon,
     );
   }
 }

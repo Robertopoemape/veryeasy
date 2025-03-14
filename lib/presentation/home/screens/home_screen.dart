@@ -32,7 +32,7 @@ class HomeScreen extends ConsumerWidget {
       ),
       floatingActionButton: CompFloactingActionButton(
         heroTag: 'whatsapp_fab',
-        widget: FaIcon(FontAwesomeIcons.whatsapp),
+        widgetIcon: FaIcon(FontAwesomeIcons.whatsapp),
         onPressed: () {
           baseHomeNotifier.launchWhatsApp();
         },

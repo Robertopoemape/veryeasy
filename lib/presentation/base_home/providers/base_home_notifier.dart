@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:veryeasy/presentation/base_home/providers/base_home_state.dart';
+import 'package:veryeasy/presentation/inventory/providers/inventory_notifier.dart';
 import 'package:veryeasy/presentation/inventory/screens/inventory_screen.dart';
 import '../../../core/core.dart';
 import '../../../core/router/router_provider.gr.dart';
@@ -20,6 +21,11 @@ class BaseHomeNotifier extends _$BaseHomeNotifier {
     return const BaseHomeState(currentIndex: 0);
   }
 
+  final TextEditingController searchController = TextEditingController();
+
+  bool isSearching = false;
+  bool isLoading = false;
+
   final List<String> titles = [
     'Inicio',
     'Videos',
@@ -37,7 +43,9 @@ class BaseHomeNotifier extends _$BaseHomeNotifier {
   ];
 
   List<List<Widget>> appBarActions(BuildContext context) => [
+        // Home
         [],
+        // Video
         [
           IconButton(
             onPressed: () => autoRouterPush(
@@ -47,6 +55,7 @@ class BaseHomeNotifier extends _$BaseHomeNotifier {
             icon: Icon(Icons.add),
           ),
         ],
+        // Products
         [
           IconButton(
             onPressed: () {},
@@ -57,16 +66,20 @@ class BaseHomeNotifier extends _$BaseHomeNotifier {
             icon: Icon(Icons.shopping_cart_checkout_sharp),
           ),
         ],
+        // Inventory
         [
-          IconButton(
-            onPressed: () {},
-            icon: Icon(Icons.edit),
-          ),
-          IconButton(
-            onPressed: () {},
-            icon: Icon(Icons.delete),
-          ),
+          if (!isSearching)
+            IconButton(
+              icon: const Icon(Icons.search),
+              onPressed: toggleSearch,
+            ),
+          if (!isSearching)
+            IconButton(
+              onPressed: () {},
+              icon: const Icon(Icons.filter_list),
+            ),
         ],
+        // IA
         [
           IconButton(
             onPressed: () {},
@@ -74,6 +87,27 @@ class BaseHomeNotifier extends _$BaseHomeNotifier {
           ),
         ],
       ];
+
+  void toggleSearch() {
+    isSearching = !isSearching;
+    if (!isSearching) searchController.clear();
+    state = state.copyWith();
+  }
+
+  void search(String query) {
+    isLoading = true;
+    state = state.copyWith();
+
+    Future.delayed(const Duration(seconds: 1), () {
+      isLoading = false;
+      state = state.copyWith();
+    });
+  }
+
+  void clearSearch() {
+    searchController.clear();
+    toggleSearch();
+  }
 
   void setIndex(int index) {
     state = state.copyWith(currentIndex: index);
