@@ -5,8 +5,7 @@ import 'package:veryeasy/components/components.dart';
 import 'package:veryeasy/core/router/router_provider.gr.dart';
 import '../../../core/core.dart';
 import '../providers/inventory_notifier.dart';
-import '../widgets/inventory_empty.dart';
-import '../widgets/inventory_list.dart';
+import '../widgets/widgets.dart';
 
 @RoutePage()
 class InventoryScreen extends ConsumerWidget {

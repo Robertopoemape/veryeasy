@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../../../components/components.dart';
 import '../../../core/core.dart';
 import 'category_item.dart';
-import 'subtitle_category.dart';
 
 class CategoryCard extends StatelessWidget {
   const CategoryCard({super.key});
@@ -12,7 +12,7 @@ class CategoryCard extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SubtitleCategory(
+        CompSubtitle(
           title: 'Categorías',
         ),
         gap10,

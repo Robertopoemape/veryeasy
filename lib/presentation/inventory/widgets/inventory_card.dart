@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:veryeasy/core/router/router_provider.gr.dart';
 
 import '../../../core/core.dart';
-import '../../../core/router/router_provider.gr.dart';
 import '../../../src/src.dart';
 
 class InventoryCard extends StatelessWidget {

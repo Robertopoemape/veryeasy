@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../inventory/providers/inventory_notifier.dart';
+import '../../inventory/widgets/widgets.dart';
 import '../providers/base_home_notifier.dart';
 
 class AppBarActions extends ConsumerWidget {
@@ -50,7 +51,10 @@ class AppBarActions extends ConsumerWidget {
                   .read(inventoryNotifierProvider.notifier)
                   .setIsSearching(true),
             ),
-            _buildIconButton(Icons.filter_list, () {}),
+            _buildIconButton(
+              Icons.filter_list,
+              () => filterShowOptions(context),
+            ),
           ],
         ];
       case 4: // IA

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:veryeasy/presentation/home/widgets/news_card.dart';
-import 'package:veryeasy/presentation/home/widgets/subtitle_category.dart';
 
+import '../../../components/components.dart';
 import '../../../core/core.dart';
 
 class TheNew extends StatelessWidget {
@@ -10,7 +10,7 @@ class TheNew extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      SubtitleCategory(
+      CompSubtitle(
         title: 'Lo Nuevo',
       ),
       gap10,

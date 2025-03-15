@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:veryeasy/presentation/inventory/widgets/widgets.dart';
 
 import '../../../core/core.dart';
 import '../../../src/src.dart';
-import 'inventory_card.dart';
 
 class InventoryList extends StatelessWidget {
   const InventoryList({

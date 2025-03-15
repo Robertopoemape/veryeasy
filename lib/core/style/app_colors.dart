@@ -36,6 +36,18 @@ class ComColors {
   static const Color green800 = Color(0xFF027A41);
   static const Color green900 = Color(0xFF02522B);
   static const Color green1000 = Color(0xFF012916);
+  static const Color greenA100 = Color(0xFF3FFA10);
+
+  // This color refers to the obscure Colors.gray
+  static const Color gray100 = Color(0xFFF3F4F6);
+  static const Color gray200 = Color(0xFFE5E7EB);
+  static const Color gray300 = Color(0xFFD1D5DB);
+  static const Color gray400 = Color(0xFF9CA3AF);
+  static const Color gray500 = Color(0xFF6B7280);
+  static const Color gray600 = Color(0xFF4B5563);
+  static const Color gray700 = Color(0xFF374151);
+  static const Color gray800 = Color(0xFF1F2937);
+  static const Color gray900 = Color(0xFF111827);
 
   // This color refers to the WARNING Colors.orange
   static const Color oran100 = Color(0xFFFFF6F2);

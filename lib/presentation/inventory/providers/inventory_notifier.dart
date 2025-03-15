@@ -1,9 +1,11 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:veryeasy/presentation/inventory/providers/inventory_state.dart';
 
+import '../../../core/core.dart';
 import '../../../src/src.dart';
 
 part 'inventory_notifier.g.dart';
@@ -46,6 +48,10 @@ class InventoryNotifier extends _$InventoryNotifier {
   }
 
   void setIsSearching(bool value) {
+    if (state.value == null) {
+      return;
+    }
+
     if (!value) {
       searchController.clear();
 
@@ -65,8 +71,19 @@ class InventoryNotifier extends _$InventoryNotifier {
     state = const AsyncValue.loading();
     try {
       final data = await _loadProducts();
-      state =
-          AsyncValue.data(InventoryState(products: data, allProducts: data));
+
+      final sortedProducts = _sortProducts(
+        data,
+        state.value?.sortBy ?? 'Nombre',
+        state.value?.ascending ?? true,
+      );
+
+      state = AsyncValue.data(
+        InventoryState(
+          products: sortedProducts,
+          allProducts: data,
+        ),
+      );
     } catch (e) {
       state = AsyncValue.error(e, StackTrace.current);
     }
@@ -100,5 +117,94 @@ class InventoryNotifier extends _$InventoryNotifier {
         description: 'Descripción del Producto C',
       ),
     ];
+  }
+
+  final List<String> sortOptions = [
+    'Nombre',
+    'Cantidad',
+    'Precio',
+  ];
+
+  void applySort(String sortBy, bool ascending) {
+    final sortedProducts =
+        _sortProducts(state.value!.allProducts, sortBy, ascending);
+    state = AsyncValue.data(
+      state.value!.copyWith(
+        sortBy: sortBy,
+        ascending: ascending,
+        products: sortedProducts,
+      ),
+    );
+  }
+
+  List<Product> _sortProducts(
+    List<Product> products,
+    String? sortBy,
+    bool ascending,
+  ) {
+    if (sortBy == null) return products;
+
+    int compare(Product a, Product b) {
+      switch (sortBy) {
+        case 'Nombre':
+          return a.name.compareTo(b.name);
+        case 'Cantidad':
+          return a.quantity.compareTo(b.quantity);
+        case 'Precio':
+          return a.price.compareTo(b.price);
+        default:
+          return 0;
+      }
+    }
+
+    final sortedList = [...products]..sort(compare);
+    return ascending ? sortedList : sortedList.reversed.toList();
+  }
+
+  void setTempSortOptions(String sortBy, bool ascending) {
+    log('Updating tempSortBy to: $sortBy, tempAscending to: $ascending');
+    state = AsyncValue.data(
+      state.value!.copyWith(
+        tempSortBy: sortBy,
+        tempAscending: ascending,
+      ),
+    );
+  }
+
+  void applyFilter(BuildContext context) {
+    final currentState = state.value!;
+    log('Error: tempSortBy is null or empty');
+    if (currentState.tempSortBy == null || currentState.tempSortBy!.isEmpty) {
+      log('Error: tempSortBy is null or empty');
+      autoRouterPop(context);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            'Selecciona un criterio de ordenamiento',
+            style: TextStyle(color: Theme.of(context).colorScheme.onError),
+          ),
+          backgroundColor: ComColors.oran500,
+        ),
+      );
+      return;
+    }
+
+    final sortedProducts = _sortProducts(
+      currentState.allProducts,
+      currentState.tempSortBy!,
+      currentState.tempAscending!,
+    );
+
+    state = AsyncValue.data(
+      currentState.copyWith(
+        sortBy: currentState.tempSortBy!,
+        ascending: currentState.tempAscending!,
+        products: sortedProducts,
+        tempSortBy: null,
+        tempAscending: null,
+      ),
+    );
+
+    autoRouterPop(context);
   }
 }

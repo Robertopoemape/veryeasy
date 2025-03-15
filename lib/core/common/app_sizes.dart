@@ -30,6 +30,7 @@ const int ints60 = 60;
 const int ints64 = 64;
 const int ints68 = 68;
 
+const int ints200 = 200;
 const int ints300 = 300;
 const int ints500 = 500;
 
