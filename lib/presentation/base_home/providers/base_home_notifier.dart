@@ -5,6 +5,7 @@ import 'package:veryeasy/presentation/inventory/screens/inventory_screen.dart';
 import '../../../src/services/auth/auth_service.dart';
 import '../../generator_ia/screens/generator_ia_screen.dart';
 import '../../home/screens/home_screen.dart';
+import '../../inventory/providers/inventory_notifier.dart';
 import '../../product/screen/product_screen.dart';
 import '../../video_ads/screens/video_ads_screen.dart';
 
@@ -34,6 +35,7 @@ class BaseHomeNotifier extends _$BaseHomeNotifier {
   ];
 
   void setIndex(int index) {
+    ref.read(inventoryNotifierProvider.notifier).setIsSearching(false);
     state = state.copyWith(currentIndex: index);
   }
 
