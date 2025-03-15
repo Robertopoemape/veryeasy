@@ -5,7 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../components/components.dart';
 import '../../../core/core.dart';
 import '../providers/product_notifier.dart';
-import '../widgets/product_grid.dart';
+import '../widgets/product_list.dart';
 
 @RoutePage()
 class ProductScreen extends ConsumerWidget {
@@ -13,23 +13,21 @@ class ProductScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(productNotifierProvider);
-
-    if (state.maybeWhen(initial: (_) => true, orElse: () => false)) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        ref.read(productNotifierProvider.notifier).fetchProducts();
-      });
-    }
+    final inventoryAsync = ref.watch(productNotifierProvider);
 
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(ds12),
-        child: state.when(
-          initial: (products) => CompLoading(),
+        child: inventoryAsync.when(
+          data: (data) => Stack(
+            children: [
+              ProductList(products: data.products),
+              if (data.isLoading) CompLoading()
+            ],
+          ),
           loading: () => CompLoading(),
-          loaded: (products) => ProductGrid(products: products),
-          error: (message) => CompError(
-            message: message,
+          error: (error, _) => CompError(
+            message: error.toString(),
             onPressed: () =>
                 ref.read(productNotifierProvider.notifier).fetchProducts(),
           ),
@@ -37,8 +35,7 @@ class ProductScreen extends ConsumerWidget {
       ),
       floatingActionButton: CompFloactingActionButton(
         heroTag: 'product_fab',
-        onPressed: () =>
-            ref.read(productNotifierProvider.notifier).fetchProducts(),
+        onPressed: () => ref.read(productNotifierProvider.notifier).refresh(),
       ),
     );
   }

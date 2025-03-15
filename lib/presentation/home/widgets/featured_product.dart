@@ -4,7 +4,7 @@ import 'package:veryeasy/components/comp_subtitle.dart';
 
 import '../../../core/core.dart';
 import '../../product/providers/product_notifier.dart';
-import '../../product/widgets/product_grid.dart';
+import '../../product/widgets/product_list.dart';
 
 class FeaturedProduct extends ConsumerWidget {
   const FeaturedProduct({super.key});
@@ -22,7 +22,7 @@ class FeaturedProduct extends ConsumerWidget {
         gap10,
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: ds12),
-          child: ProductGrid(products: productNotifier.staticProducts),
+          child: ProductList(products: productNotifier.staticProducts),
         ),
       ],
     );

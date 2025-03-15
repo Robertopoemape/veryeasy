@@ -1,14 +1,16 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import '../../../src/entities/product.dart';
-import 'product_state.dart';
+import 'package:veryeasy/presentation/product/providers/product_state.dart';
+
+import '../../../src/src.dart';
 
 part 'product_notifier.g.dart';
 
 @riverpod
 class ProductNotifier extends _$ProductNotifier {
   @override
-  ProductState build() {
-    return const ProductState.initial([]);
+  FutureOr<ProductState> build() async {
+    final products = await fetchProducts();
+    return ProductState(products: products);
   }
 
   final List<Product> staticProducts = [
@@ -49,13 +51,27 @@ class ProductNotifier extends _$ProductNotifier {
         description: 'Este es un nuevo producto'),
   ];
 
-  Future<void> fetchProducts() async {
-    state = const ProductState.loading();
+  Future<void> refresh() async {
+    state = AsyncValue.data(state.value!.copyWith(isLoading: true));
     try {
       await Future.delayed(const Duration(seconds: 1));
-      state = ProductState.loaded(staticProducts);
+      state = AsyncValue.data(
+          ProductState(products: staticProducts, isLoading: false));
     } catch (e) {
-      state = ProductState.error(e.toString());
+      state = AsyncValue.error(e, StackTrace.current);
     }
+  }
+
+  Future<List<Product>> fetchProducts() async {
+    state = AsyncValue.loading();
+
+    try {
+      await Future.delayed(const Duration(seconds: 1));
+      state = AsyncValue.data(ProductState(products: staticProducts));
+    } catch (e) {
+      state = AsyncValue.error(e, StackTrace.current);
+    }
+
+    return state.value!.products;
   }
 }

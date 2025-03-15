@@ -6,8 +6,8 @@ import '../../../core/core.dart';
 import '../../../src/entities/product.dart';
 import 'product_card.dart';
 
-class ProductGrid extends StatelessWidget {
-  const ProductGrid({
+class ProductList extends StatelessWidget {
+  const ProductList({
     required this.products,
     super.key,
   });

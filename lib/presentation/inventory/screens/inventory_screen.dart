@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -21,24 +19,10 @@ class InventoryScreen extends ConsumerWidget {
 
     return Scaffold(
       body: inventoryAsync.when(
-        data: (list) => InventoryList(items: list.products),
-        /*{
-          final products = state.products;
-          if (products.isEmpty) {
-            return CompListEmpty(
-              icon: Icons.store,
-              label: 'Productos',
-              onPressed: () {
-                autoRouterPush(context, CreateProductRoute());
-              },
-            );
-          } else {
-            return InventoryList(items: products);
-          }
-        },*/
+        data: (data) => InventoryList(items: data.products),
         loading: () => CompLoading(),
         error: (error, _) => CompError(
-          message: e.toString(),
+          message: error.toString(),
           onPressed: () async =>
               await ref.read(inventoryNotifierProvider.notifier).refresh(),
         ),
