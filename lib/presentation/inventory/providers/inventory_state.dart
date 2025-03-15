@@ -12,7 +12,7 @@ class InventoryState with _$InventoryState {
     @Default([]) List<Product> allProducts,
     @Default(false) bool isSearching,
     @Default(false) bool isLoading,
-    @Default('') String sortBy,
+    @Default(null) String? sortBy,
     @Default(false) bool ascending,
     bool? tempAscending,
     String? tempSortBy,

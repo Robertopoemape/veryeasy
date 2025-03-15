@@ -45,42 +45,44 @@ class CompButtonState extends State<CompButton> {
 
   @override
   Widget build(BuildContext context) {
+    final bool isDisabled = isLoading || widget.onPressed == null;
+
     return Container(
-        padding: widget.paddingContent,
-        height: widget.height,
-        width: widget.width ?? MediaQuery.of(context).size.width,
-        child: ElevatedButton(
-          onPressed: isLoading ? null : _handlePressed,
-          style: ElevatedButton.styleFrom(
-            disabledBackgroundColor: widget.backgroundColor,
-            backgroundColor: widget.backgroundColor ?? Colors.transparent,
-            shadowColor: widget.backgroundColor == Colors.transparent
-                ? Colors.transparent
-                : widget.backgroundColor,
-            elevation: widget.backgroundColor == Colors.transparent ? ds0 : ds5,
-            padding: const EdgeInsets.symmetric(horizontal: ds16),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(ds8),
-              side: BorderSide(
-                color: widget.borderColor!,
-                width: 1.5,
-              ),
+      padding: widget.paddingContent,
+      height: widget.height,
+      width: widget.width ?? MediaQuery.of(context).size.width,
+      child: ElevatedButton(
+        onPressed: isDisabled ? null : _handlePressed,
+        style: ElevatedButton.styleFrom(
+          backgroundColor:
+              isDisabled ? ComColors.grey500 : widget.backgroundColor,
+          foregroundColor: isDisabled ? ComColors.grey200 : widget.textColor,
+          shadowColor: isDisabled ? Colors.transparent : widget.backgroundColor,
+          elevation: isDisabled ? ds0 : ds5,
+          padding: const EdgeInsets.symmetric(horizontal: ds16),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(ds8),
+            side: BorderSide(
+              color: isDisabled ? ComColors.grey400 : widget.borderColor!,
+              width: 1.5,
             ),
           ),
-          child: isLoading
-              ? SizedBox(
-                  width: ds20,
-                  height: ds20,
-                  child: const CircularProgressIndicator(
-                    valueColor: AlwaysStoppedAnimation<Color>(ComColors.white),
-                    strokeWidth: ds2,
-                  ),
-                )
-              : Text(
-                  widget.name,
-                  style: ComTextStyle.button1.w500
-                      .copyWith(color: widget.textColor),
+        ),
+        child: isLoading
+            ? SizedBox(
+                width: ds20,
+                height: ds20,
+                child: const CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(ComColors.white),
+                  strokeWidth: ds2,
                 ),
-        ));
+              )
+            : Text(
+                widget.name,
+                style: ComTextStyle.button1.w500.copyWith(
+                    color: isDisabled ? ComColors.grey200 : widget.textColor),
+              ),
+      ),
+    );
   }
 }

@@ -12,7 +12,12 @@ class InventoryFilterOptions extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final inventoryState = ref.watch(inventoryNotifierProvider).value!;
     final inventoryNotifier = ref.watch(inventoryNotifierProvider.notifier);
+
+    final tempAscending = inventoryState.tempAscending;
+    final tempSortBy = inventoryState.tempSortBy;
+    bool isButtonDisabled = tempAscending == null || tempSortBy == null;
 
     return Padding(
       padding: const EdgeInsets.all(ds16),
@@ -30,12 +35,13 @@ class InventoryFilterOptions extends ConsumerWidget {
           OrderSwitch(),
           gap24,
           CompButton(
-              name: 'Aplicar filtro',
-              borderColor: ComColors.greenA100,
-              backgroundColor: ComColors.greenA100,
-              onPressed: () {
-                inventoryNotifier.applyFilter(context);
-              }),
+            name: 'Aplicar filtro',
+            borderColor: ComColors.greenA100,
+            backgroundColor: ComColors.greenA100,
+            onPressed: isButtonDisabled
+                ? null
+                : () => inventoryNotifier.applyFilter(context),
+          ),
         ],
       ),
     );

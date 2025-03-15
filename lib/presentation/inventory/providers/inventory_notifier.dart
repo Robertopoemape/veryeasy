@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -162,7 +161,6 @@ class InventoryNotifier extends _$InventoryNotifier {
   }
 
   void setTempSortOptions(String sortBy, bool ascending) {
-    log('Updating tempSortBy to: $sortBy, tempAscending to: $ascending');
     state = AsyncValue.data(
       state.value!.copyWith(
         tempSortBy: sortBy,
@@ -173,9 +171,7 @@ class InventoryNotifier extends _$InventoryNotifier {
 
   void applyFilter(BuildContext context) {
     final currentState = state.value!;
-    log('Error: tempSortBy is null or empty');
     if (currentState.tempSortBy == null || currentState.tempSortBy!.isEmpty) {
-      log('Error: tempSortBy is null or empty');
       autoRouterPop(context);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -200,8 +196,6 @@ class InventoryNotifier extends _$InventoryNotifier {
         sortBy: currentState.tempSortBy!,
         ascending: currentState.tempAscending!,
         products: sortedProducts,
-        tempSortBy: null,
-        tempAscending: null,
       ),
     );
 

@@ -10,9 +10,12 @@ class FilterSortDropdown extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final sortOptions =
-        ref.watch(inventoryNotifierProvider.notifier).sortOptions;
+    final inventoryState = ref.watch(inventoryNotifierProvider).value!;
     final inventoryNotifier = ref.watch(inventoryNotifierProvider.notifier);
+    final sortOptions = inventoryNotifier.sortOptions;
+    final tempAscending =
+        inventoryState.tempAscending ?? inventoryState.ascending;
+    final tempSortBy = inventoryState.tempSortBy ?? inventoryState.sortBy;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -25,11 +28,10 @@ class FilterSortDropdown extends ConsumerWidget {
         CompDropdown(
           borderRadius: ds12,
           items: sortOptions,
+          initialValue: tempSortBy,
           onChanged: (sortBy) {
             if (sortBy != null) {
-              final ascending =
-                  ref.watch(inventoryNotifierProvider).value!.tempAscending;
-              inventoryNotifier.setTempSortOptions(sortBy, ascending!);
+              inventoryNotifier.setTempSortOptions(sortBy, tempAscending);
             }
           },
         ),

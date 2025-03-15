@@ -37,45 +37,37 @@ class CompDropdown extends StatefulWidget {
 }
 
 class _DropdownState extends State<CompDropdown> {
-  Color? borderColor;
+  late Color borderColor;
+  late TextEditingController internalController;
   String? selectedValue;
-  TextEditingController? internalController;
 
   @override
   void initState() {
     super.initState();
     borderColor = widget.borderColor ?? ComColors.bgcblack;
-
     internalController = widget.controller ?? TextEditingController();
 
-    internalController!.addListener(
-      () {
-        if (mounted) {
-          setState(() {
-            if (internalController!.text.isEmpty) {
-              borderColor = ComColors.bgcblack;
-            } else {
-              selectedValue = internalController!.text.isNotEmpty &&
-                      widget.items.contains(internalController!.text)
-                  ? internalController!.text
-                  : null;
-            }
-          });
-        }
-      },
-    );
-
-    if (internalController!.text.isNotEmpty) {
-      selectedValue = widget.items.contains(internalController!.text)
-          ? internalController!.text
-          : null;
+    if (widget.initialValue != null &&
+        widget.items.contains(widget.initialValue)) {
+      internalController.text = widget.initialValue!;
+      selectedValue = widget.initialValue;
+      borderColor = ComColors.greenA100;
     }
+
+    internalController.addListener(() {
+      if (!mounted) return;
+      setState(() {
+        final text = internalController.text;
+        selectedValue = widget.items.contains(text) ? text : null;
+        borderColor = text.isEmpty ? ComColors.bgcblack : borderColor;
+      });
+    });
   }
 
   @override
   void dispose() {
     if (widget.controller == null) {
-      internalController?.dispose();
+      internalController.dispose();
     }
     super.dispose();
   }
@@ -85,58 +77,39 @@ class _DropdownState extends State<CompDropdown> {
     return Padding(
       padding: widget.paddingContent,
       child: DropdownButtonFormField<String>(
-        value:
-            internalController!.text.isEmpty ? null : internalController!.text,
+        value: selectedValue,
         decoration: InputDecoration(
           contentPadding: const EdgeInsets.symmetric(horizontal: ds16),
           labelText: widget.label,
-          enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: borderColor!,
-              width: widget.widthBorder,
-            ),
-            borderRadius: BorderRadius.circular(widget.borderRadius),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: borderColor!,
-              width: ds2,
-            ),
-            borderRadius: BorderRadius.circular(widget.borderRadius),
-          ),
-          border: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: borderColor!,
-              width: widget.widthBorder,
-            ),
-            borderRadius: BorderRadius.circular(widget.borderRadius),
-          ),
+          enabledBorder: _borderStyle(),
+          focusedBorder: _borderStyle(ds2),
+          border: _borderStyle(),
         ),
-        hint: Text(
-          widget.hintText,
-          style: ComTextStyle.body2,
-        ),
+        hint: Text(widget.hintText, style: ComTextStyle.body2),
         icon: Icon(Icons.keyboard_arrow_down, size: ds20),
-        items: widget.items.map((method) {
-          return DropdownMenuItem<String>(
-            value: method,
-            child: Text(
-              method,
-              style: ComTextStyle.body2,
-            ),
-          );
-        }).toList(),
+        items: widget.items
+            .map((item) => DropdownMenuItem<String>(
+                  value: item,
+                  child: Text(item, style: ComTextStyle.body2),
+                ))
+            .toList(),
         onChanged: (value) {
-          if (mounted) {
-            setState(() {
-              internalController!.text = value ?? '';
-              selectedValue = value;
-              borderColor = ComColors.greenA100;
-            });
-            widget.onChanged?.call(value);
-          }
+          if (!mounted) return;
+          setState(() {
+            internalController.text = value ?? '';
+            selectedValue = value;
+            borderColor = ComColors.greenA100;
+          });
+          widget.onChanged?.call(value);
         },
       ),
+    );
+  }
+
+  OutlineInputBorder _borderStyle([double width = ds1]) {
+    return OutlineInputBorder(
+      borderSide: BorderSide(color: borderColor, width: width),
+      borderRadius: BorderRadius.circular(widget.borderRadius),
     );
   }
 }

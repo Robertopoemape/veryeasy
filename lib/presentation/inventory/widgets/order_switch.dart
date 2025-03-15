@@ -13,12 +13,12 @@ class OrderSwitch extends ConsumerWidget {
     final inventoryNotifier = ref.watch(inventoryNotifierProvider.notifier);
     final tempAscending =
         inventoryState.tempAscending ?? inventoryState.ascending;
-
+    final sortBy = inventoryState.tempSortBy ?? inventoryState.sortBy;
     return Row(
       children: [
         Expanded(
           child: Text(
-            'Orden ${tempAscending ? "Ascendente" : "Descendente"}',
+            'De ${tempAscending ? "menor a mayor" : "mayor a menor"}',
             style: ComTextStyle.button1.w500.copyWith(
               color: Theme.of(context).colorScheme.onSurface,
             ),
@@ -29,20 +29,19 @@ class OrderSwitch extends ConsumerWidget {
           duration: const Duration(milliseconds: ints200),
           child: Icon(
             Icons.arrow_downward,
-            color: tempAscending ? ComColors.greenA100 : ComColors.gray300,
+            color: tempAscending ? ComColors.greenA100 : ComColors.grey300,
             size: ds24,
           ),
         ),
         Switch(
           value: tempAscending,
-          onChanged: (value) {
-            final sortBy = inventoryState.sortBy;
-            inventoryNotifier.setTempSortOptions(sortBy, value);
+          onChanged: (ascending) {
+            inventoryNotifier.setTempSortOptions(sortBy!, ascending);
           },
           activeColor: ComColors.greenA100,
           activeTrackColor: ComColors.greenA100.withOpacity(0.4),
-          inactiveThumbColor: ComColors.gray300,
-          inactiveTrackColor: ComColors.gray300.withOpacity(0.4),
+          inactiveThumbColor: ComColors.grey300,
+          inactiveTrackColor: ComColors.grey300.withOpacity(0.4),
         ),
       ],
     );
