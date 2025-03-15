@@ -17,11 +17,6 @@ class BaseHomeNotifier extends _$BaseHomeNotifier {
     return const BaseHomeState(currentIndex: 0);
   }
 
-  final TextEditingController searchController = TextEditingController();
-
-  bool isSearching = false;
-  bool isLoading = false;
-
   final List<String> titles = [
     'Inicio',
     'Videos',

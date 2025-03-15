@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:veryeasy/presentation/inventory/providers/inventory_state.dart';
 
 import '../../../src/src.dart';
 
@@ -19,7 +20,8 @@ class InventoryNotifier extends _$InventoryNotifier {
       _debounce?.cancel();
       searchController.dispose();
     });
-    return InventoryState(products: await _loadProducts());
+    final products = await _loadProducts();
+    return InventoryState(products: products, allProducts: products);
   }
 
   void toggleSearch() {
@@ -30,8 +32,8 @@ class InventoryNotifier extends _$InventoryNotifier {
 
   void search(String query) {
     _debounce?.cancel();
+    state = AsyncValue.data(state.value!.copyWith(isLoading: true));
     _debounce = Timer(const Duration(milliseconds: 500), () {
-      state = AsyncValue.data(state.value!.copyWith(isLoading: true));
       final filteredList = state.value!.allProducts.where((product) {
         final name = product.name.toLowerCase();
         return name.contains(query.toLowerCase());
@@ -98,33 +100,5 @@ class InventoryNotifier extends _$InventoryNotifier {
         description: 'Descripción del Producto C',
       ),
     ];
-  }
-}
-
-class InventoryState {
-  final List<Product> products;
-  final List<Product> allProducts;
-  final bool isSearching;
-  final bool isLoading;
-
-  InventoryState({
-    this.products = const [],
-    this.allProducts = const [],
-    this.isSearching = false,
-    this.isLoading = false,
-  });
-
-  InventoryState copyWith({
-    List<Product>? products,
-    List<Product>? allProducts,
-    bool? isSearching,
-    bool? isLoading,
-  }) {
-    return InventoryState(
-      products: products ?? this.products,
-      allProducts: allProducts ?? this.allProducts,
-      isSearching: isSearching ?? this.isSearching,
-      isLoading: isLoading ?? this.isLoading,
-    );
   }
 }
