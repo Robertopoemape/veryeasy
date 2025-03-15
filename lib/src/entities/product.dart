@@ -6,10 +6,12 @@ part 'product.g.dart';
 @freezed
 class Product with _$Product {
   const factory Product({
+    required String id,
     required String name,
+    required int quantity,
     required double price,
     required String image,
-    String? description,
+    required String description,
   }) = _Product;
 
   factory Product.fromJson(Map<String, dynamic> json) =>

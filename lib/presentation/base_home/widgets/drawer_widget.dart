@@ -44,7 +44,7 @@ class DrawerWidget extends ConsumerWidget {
             leading: const Icon(Icons.home),
             title: const Text('Inicio'),
             onTap: () {
-              Navigator.pop(context);
+              autoRouterPop(context);
               autoRouterReplace(context, BaseHomeRoute());
             },
           ),
@@ -52,7 +52,7 @@ class DrawerWidget extends ConsumerWidget {
             leading: const Icon(Icons.video_library),
             title: const Text('Videos'),
             onTap: () {
-              Navigator.pop(context);
+              autoRouterPop(context);
               autoRouterReplace(context, VideoAdsRoute());
             },
           ),
@@ -60,7 +60,7 @@ class DrawerWidget extends ConsumerWidget {
             leading: const Icon(Icons.store),
             title: const Text('Productos'),
             onTap: () {
-              Navigator.pop(context);
+              autoRouterPop(context);
               autoRouterReplace(context, ProductRoute());
             },
           ),
@@ -68,7 +68,7 @@ class DrawerWidget extends ConsumerWidget {
             leading: const Icon(Icons.inventory),
             title: const Text('Inventario'),
             onTap: () {
-              Navigator.pop(context);
+              autoRouterPop(context);
               autoRouterReplace(context, InventoryRoute());
             },
           ),
@@ -76,7 +76,7 @@ class DrawerWidget extends ConsumerWidget {
             leading: const Icon(Icons.smart_display),
             title: const Text('IA'),
             onTap: () {
-              Navigator.pop(context);
+              autoRouterPop(context);
               autoRouterReplace(context, GeneratorIARoute());
             },
           ),
@@ -85,7 +85,7 @@ class DrawerWidget extends ConsumerWidget {
             leading: const Icon(Icons.settings),
             title: const Text('Configuración'),
             onTap: () {
-              Navigator.pop(context);
+              autoRouterPop(context);
               autoRouterPush(context, SettingRoute());
             },
           ),

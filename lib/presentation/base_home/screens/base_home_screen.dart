@@ -1,7 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:veryeasy/presentation/inventory/widgets/inventory_filter_options.dart';
 import '../../../core/core.dart';
 import '../../inventory/providers/inventory_notifier.dart';
 import '../../inventory/widgets/inventory_search_product.dart';
@@ -16,8 +15,9 @@ class BaseHomeScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final baseHomeState = ref.watch(baseHomeNotifierProvider);
+    final isSearching = ref.watch(inventoryNotifierProvider
+        .select((state) => state.value?.isSearching ?? false));
     final baseHomeNotifier = ref.read(baseHomeNotifierProvider.notifier);
-    // final inventoryNotifier = ref.watch(inventoryNotifierProvider.notifier);
     final currentIndex = baseHomeState.currentIndex;
 
     return Scaffold(
@@ -25,8 +25,8 @@ class BaseHomeScreen extends ConsumerWidget {
       appBar: AppBar(
         backgroundColor: ComColors.primaryColor,
         title: AnimatedSwitcher(
-          duration: const Duration(milliseconds: ints300),
-          child: baseHomeNotifier.isSearching
+          duration: const Duration(milliseconds: 300),
+          child: isSearching
               ? InventorySearchProduct()
               : Text(baseHomeNotifier.titles[currentIndex],
                   style: ComTextStyle.title.w700),
@@ -39,7 +39,12 @@ class BaseHomeScreen extends ConsumerWidget {
           );
         }),
         actions: [
-          ...baseHomeNotifier.appBarActions(context)[currentIndex],
+          ...AppBarActions().getAppBarActions(
+            context,
+            currentIndex,
+            isSearching,
+            ref,
+          ),
         ],
       ),
       body: IndexedStack(

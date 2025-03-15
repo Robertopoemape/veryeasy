@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../core/core.dart';
+import '../../../src/src.dart';
 import 'inventory_card.dart';
 
 class InventoryList extends StatelessWidget {
@@ -8,7 +9,7 @@ class InventoryList extends StatelessWidget {
     required this.items,
     super.key,
   });
-  final List<Map<String, dynamic>> items;
+  final List<Product> items;
 
   @override
   Widget build(BuildContext context) {

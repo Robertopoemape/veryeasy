@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../core/core.dart';
 import '../../../core/router/router_provider.gr.dart';
+import '../../../src/src.dart';
 
 class InventoryCard extends StatelessWidget {
   const InventoryCard({
@@ -11,7 +12,7 @@ class InventoryCard extends StatelessWidget {
   });
 
   final BuildContext context;
-  final Map<String, dynamic> item;
+  final Product item;
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +38,7 @@ class InventoryCard extends StatelessWidget {
             ClipRRect(
               borderRadius: BorderRadius.circular(ds8),
               child: Image.network(
-                item['image'],
+                item.image,
                 width: ds60,
                 height: ds60,
                 fit: BoxFit.cover,
@@ -58,19 +59,19 @@ class InventoryCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    item['name'],
+                    item.name,
                     style: ComTextStyle.button1,
                     maxLines: ints1,
                     overflow: TextOverflow.ellipsis,
                   ),
                   gap4,
                   Text(
-                    'Cantidad: ${item['quantity']}',
+                    'Cantidad: ${item.quantity}',
                     style: ComTextStyle.caption,
                   ),
                   gap4,
                   Text(
-                    item['price'],
+                    item.price.toString(),
                     style: ComTextStyle.button1.green500,
                   ),
                 ],

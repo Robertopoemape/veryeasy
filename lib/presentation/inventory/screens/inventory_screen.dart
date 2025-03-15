@@ -17,43 +17,23 @@ class InventoryScreen extends ConsumerWidget {
     final inventoryAsync = ref.watch(inventoryNotifierProvider);
 
     return Scaffold(
-      // appBar: _buildAppBar(context),
-      body: _buildBody(context, inventoryAsync),
+      body: inventoryAsync.when(
+        data: (state) {
+          final products = state.products;
+          if (products.isEmpty) {
+            return InventoryEmpty();
+          } else {
+            return InventoryList(items: products);
+          }
+        },
+        loading: () => CompLoading(),
+        error: (error, _) => Center(child: Text('Error: $error')),
+      ),
       floatingActionButton: CompFloactingActionButton(
         heroTag: 'inventory_fab',
         widgetIcon: Icon(Icons.add_circle_outline_rounded),
         onPressed: () => autoRouterPush(context, CreateProductRoute()),
       ),
-    );
-  }
-
-/*
-  /// AppBar personalizado con título y acciones
-  PreferredSizeWidget _buildAppBar(BuildContext context) {
-    return AppBar(
-      title: const Text('Inventario'),
-      centerTitle: true,
-      backgroundColor: Theme.of(context).primaryColor,
-      actions: [
-        IconButton(
-          icon: const Icon(Icons.search),
-          onPressed: () => _showSearchDialog(context),
-        ),
-        IconButton(
-          icon: const Icon(Icons.filter_list),
-          onPressed: () => _showFilterOptions(context),
-        ),
-      ],
-    );
-  }*/
-
-  Widget _buildBody(BuildContext context,
-      AsyncValue<List<Map<String, dynamic>>> inventoryAsync) {
-    return inventoryAsync.when(
-      data: (items) =>
-          items.isEmpty ? InventoryEmpty() : InventoryList(items: items),
-      loading: () => CompLoading(),
-      error: (error, _) => Center(child: Text('Error: $error')),
     );
   }
 }
