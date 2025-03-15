@@ -6,8 +6,8 @@ import '../../../components/components.dart';
 import '../../../core/core.dart';
 import '../../../core/router/router_provider.gr.dart';
 
-class DrawerWidget extends ConsumerWidget {
-  const DrawerWidget({super.key});
+class BaseHomeDrawer extends ConsumerWidget {
+  const BaseHomeDrawer({super.key});
 
   void _handleSignOut(BuildContext context, WidgetRef ref) {
     final baseHomeNotifier = ref.read(baseHomeNotifierProvider.notifier);
