@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:veryeasy/core/router/router_provider.gr.dart';
 
 import '../../../components/components.dart';
 import '../../../core/core.dart';
@@ -13,6 +14,7 @@ class InventoryEmpty extends StatelessWidget {
       child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const Icon(
               Icons.inventory,
@@ -25,7 +27,12 @@ class InventoryEmpty extends StatelessWidget {
               style: ComTextStyle.h6.w500,
             ),
             gap16,
-            CompButton(name: 'Agregar Producto', onPressed: () {}),
+            CompButton(
+                name: 'Agregar Producto',
+                width: 160,
+                onPressed: () {
+                  autoRouterPush(context, CreateProductRoute());
+                }),
           ],
         ),
       ),

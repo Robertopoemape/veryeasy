@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -13,6 +15,8 @@ class InventoryScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final productsList =
+        ref.watch(inventoryNotifierProvider).value?.products ?? [];
     final inventoryAsync = ref.watch(inventoryNotifierProvider);
 
     return Scaffold(
@@ -26,13 +30,19 @@ class InventoryScreen extends ConsumerWidget {
           }
         },
         loading: () => CompLoading(),
-        error: (error, _) => Center(child: Text('Error: $error')),
+        error: (error, _) => CompError(
+          message: e.toString(),
+          onPressed: () async =>
+              await ref.read(inventoryNotifierProvider.notifier).refresh(),
+        ),
       ),
-      floatingActionButton: CompFloactingActionButton(
-        heroTag: 'inventory_fab',
-        widgetIcon: Icon(Icons.add_circle_outline_rounded),
-        onPressed: () => autoRouterPush(context, CreateProductRoute()),
-      ),
+      floatingActionButton: productsList.isEmpty
+          ? null
+          : CompFloactingActionButton(
+              heroTag: 'inventory_fab',
+              widgetIcon: Icon(Icons.add),
+              onPressed: () => autoRouterPush(context, CreateProductRoute()),
+            ),
     );
   }
 }

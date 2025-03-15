@@ -25,7 +25,7 @@ class OrderSwitch extends ConsumerWidget {
           ),
         ),
         AnimatedRotation(
-          turns: tempAscending ? 0 : 0.5,
+          turns: tempAscending ? ds0 : ds05,
           duration: const Duration(milliseconds: ints200),
           child: Icon(
             Icons.arrow_downward,
@@ -39,9 +39,9 @@ class OrderSwitch extends ConsumerWidget {
             inventoryNotifier.setTempSortOptions(sortBy!, ascending);
           },
           activeColor: ComColors.greenA100,
-          activeTrackColor: ComColors.greenA100.withOpacity(0.4),
+          activeTrackColor: ComColors.greenA100.withOpacity(ds04),
           inactiveThumbColor: ComColors.grey300,
-          inactiveTrackColor: ComColors.grey300.withOpacity(0.4),
+          inactiveTrackColor: ComColors.grey300.withOpacity(ds04),
         ),
       ],
     );

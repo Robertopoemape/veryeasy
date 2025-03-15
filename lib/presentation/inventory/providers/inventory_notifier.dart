@@ -73,8 +73,8 @@ class InventoryNotifier extends _$InventoryNotifier {
 
       final sortedProducts = _sortProducts(
         data,
-        state.value?.sortBy ?? 'Nombre',
-        state.value?.ascending ?? true,
+        state.value?.sortBy,
+        state.value!.ascending,
       );
 
       state = AsyncValue.data(
