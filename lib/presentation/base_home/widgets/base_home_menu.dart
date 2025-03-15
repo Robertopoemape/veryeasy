@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class BaseHomeMenu extends StatelessWidget {
-  const BaseHomeMenu({super.key});
+class BaseHomeOpenMenu extends StatelessWidget {
+  const BaseHomeOpenMenu({super.key});
 
   @override
   Widget build(BuildContext context) {

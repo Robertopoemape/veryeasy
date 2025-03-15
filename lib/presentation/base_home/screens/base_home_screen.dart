@@ -22,7 +22,7 @@ class BaseHomeScreen extends ConsumerWidget {
         backgroundColor: ComColors.primaryColor,
         title: BaseHomeTitleAnimation(),
         centerTitle: true,
-        leading: BaseHomeMenu(),
+        leading: BaseHomeOpenMenu(),
         actions: const [
           AppBarActions(),
         ],
