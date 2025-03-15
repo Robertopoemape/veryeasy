@@ -21,14 +21,21 @@ class InventoryScreen extends ConsumerWidget {
 
     return Scaffold(
       body: inventoryAsync.when(
-        data: (state) {
+        data: (list) => InventoryList(items: list.products),
+        /*{
           final products = state.products;
           if (products.isEmpty) {
-            return InventoryEmpty();
+            return CompListEmpty(
+              icon: Icons.store,
+              label: 'Productos',
+              onPressed: () {
+                autoRouterPush(context, CreateProductRoute());
+              },
+            );
           } else {
             return InventoryList(items: products);
           }
-        },
+        },*/
         loading: () => CompLoading(),
         error: (error, _) => CompError(
           message: e.toString(),

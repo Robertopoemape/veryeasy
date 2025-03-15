@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:veryeasy/core/router/router_provider.gr.dart';
 
+import '../../../components/components.dart';
 import '../../../core/core.dart';
 import '../../../src/entities/product.dart';
 import 'product_card.dart';
@@ -15,11 +17,13 @@ class ProductGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return products.isEmpty
-        ? Center(
-            child: Text(
-            'No hay productos disponibles.',
-            style: ComTextStyle.h6.w500,
-          ))
+        ? CompListEmpty(
+            icon: Icons.store,
+            label: 'Productos',
+            onPressed: () {
+              autoRouterPush(context, CreateProductRoute());
+            },
+          )
         : SingleChildScrollView(
             child: Wrap(
               spacing: ds12,

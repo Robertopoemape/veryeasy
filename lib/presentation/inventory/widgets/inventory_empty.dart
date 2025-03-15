@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+/*import 'package:flutter/material.dart';
 import 'package:veryeasy/core/router/router_provider.gr.dart';
 
 import '../../../components/components.dart';
@@ -28,14 +28,16 @@ class InventoryEmpty extends StatelessWidget {
             ),
             gap16,
             CompButton(
-                name: 'Agregar Producto',
-                width: 160,
-                onPressed: () {
-                  autoRouterPush(context, CreateProductRoute());
-                }),
+              name: 'Agregar Producto',
+              width: 160,
+              onPressed: () {
+                autoRouterPush(context, CreateProductRoute());
+              },
+            ),
           ],
         ),
       ),
     );
   }
 }
+*/
