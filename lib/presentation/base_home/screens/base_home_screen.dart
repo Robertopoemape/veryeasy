@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/core.dart';
+import '../../drawer_menu.dart/screens/drawer_menu_screen.dart';
 import '../providers/base_home_notifier.dart';
 import '../widgets/bottom_navigation_bar_list.dart';
 import '../widgets/widgets.dart';
@@ -17,7 +18,7 @@ class BaseHomeScreen extends ConsumerWidget {
     final currentIndex = baseHomeState.currentIndex;
 
     return Scaffold(
-      drawer: BaseHomeDrawer(),
+      drawer: DrawerMenuScreen(),
       appBar: AppBar(
         backgroundColor: ComColors.primaryColor,
         title: BaseHomeTitleAnimation(),

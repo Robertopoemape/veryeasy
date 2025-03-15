@@ -21,6 +21,7 @@ class InventoryNotifier extends _$InventoryNotifier {
       _debounce?.cancel();
       searchController.dispose();
     });
+    state = const AsyncValue.data(InventoryState(isSearching: false));
     final products = await _loadProducts();
     return InventoryState(products: products, allProducts: products);
   }
