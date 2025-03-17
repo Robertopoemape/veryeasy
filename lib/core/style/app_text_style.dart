@@ -66,6 +66,17 @@ extension TextStyleColorExtension on TextStyle {
   TextStyle get black900 => copyWith(color: ComColors.black900);
   TextStyle get black1000 => copyWith(color: ComColors.black1000);
 
+  // This color refers to the obscure Colors.gray
+  TextStyle get grey100 => copyWith(color: ComColors.grey100);
+  TextStyle get grey200 => copyWith(color: ComColors.grey200);
+  TextStyle get grey300 => copyWith(color: ComColors.grey300);
+  TextStyle get grey400 => copyWith(color: ComColors.grey400);
+  TextStyle get grey500 => copyWith(color: ComColors.grey500);
+  TextStyle get grey600 => copyWith(color: ComColors.grey600);
+  TextStyle get grey700 => copyWith(color: ComColors.grey700);
+  TextStyle get grey800 => copyWith(color: ComColors.grey800);
+  TextStyle get grey900 => copyWith(color: ComColors.grey900);
+
   // this group of success colors is equal to Colors.green
   TextStyle get green100 => copyWith(color: ComColors.green100);
   TextStyle get green200 => copyWith(color: ComColors.green200);

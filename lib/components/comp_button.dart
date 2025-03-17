@@ -80,7 +80,7 @@ class CompButtonState extends State<CompButton> {
             : Text(
                 widget.name,
                 style: ComTextStyle.button1.w500.copyWith(
-                    color: isDisabled ? ComColors.grey200 : widget.textColor),
+                    color: isDisabled ? ComColors.white : widget.textColor),
               ),
       ),
     );

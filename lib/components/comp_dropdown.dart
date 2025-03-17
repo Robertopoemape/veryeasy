@@ -76,32 +76,61 @@ class _DropdownState extends State<CompDropdown> {
   Widget build(BuildContext context) {
     return Padding(
       padding: widget.paddingContent,
-      child: DropdownButtonFormField<String>(
-        value: selectedValue,
-        decoration: InputDecoration(
-          contentPadding: const EdgeInsets.symmetric(horizontal: ds16),
-          labelText: widget.label,
-          enabledBorder: _borderStyle(),
-          focusedBorder: _borderStyle(ds2),
-          border: _borderStyle(),
-        ),
-        hint: Text(widget.hintText, style: ComTextStyle.body2),
-        icon: Icon(Icons.keyboard_arrow_down, size: ds20),
-        items: widget.items
-            .map((item) => DropdownMenuItem<String>(
-                  value: item,
-                  child: Text(item, style: ComTextStyle.body2),
-                ))
-            .toList(),
-        onChanged: (value) {
-          if (!mounted) return;
-          setState(() {
-            internalController.text = value ?? '';
-            selectedValue = value;
-            borderColor = ComColors.greenA100;
-          });
-          widget.onChanged?.call(value);
-        },
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          widget.messageLabel.isEmpty
+              ? gap0
+              : Padding(
+                  padding: const EdgeInsets.only(bottom: ds2),
+                  child: Row(
+                    children: [
+                      Text(
+                        widget.messageLabel,
+                        style: ComTextStyle.overline.black600,
+                      ),
+                      const Spacer(),
+                      if (widget.isOptional)
+                        Text(
+                          '*Opcional',
+                          style: ComTextStyle.overline.white800,
+                        ),
+                    ],
+                  ),
+                ),
+          DropdownButtonFormField<String>(
+            value: selectedValue,
+            decoration: InputDecoration(
+              labelStyle: ComTextStyle.caption.white800,
+              contentPadding: const EdgeInsets.symmetric(horizontal: ds16),
+              labelText: widget.label,
+              enabledBorder: _borderStyle(),
+              focusedBorder: _borderStyle(ds2),
+              border: _borderStyle(),
+            ),
+            hint: Text(
+              widget.hintText,
+              style: ComTextStyle.caption.white800,
+            ),
+            icon: Icon(Icons.keyboard_arrow_down, size: ds20),
+            items: widget.items
+                .map((item) => DropdownMenuItem<String>(
+                      value: item,
+                      child: Text(item, style: ComTextStyle.body2),
+                    ))
+                .toList(),
+            onChanged: (value) {
+              if (!mounted) return;
+              setState(() {
+                internalController.text = value ?? '';
+                selectedValue = value;
+                borderColor = ComColors.greenA100;
+              });
+              widget.onChanged?.call(value);
+            },
+          ),
+        ],
       ),
     );
   }
