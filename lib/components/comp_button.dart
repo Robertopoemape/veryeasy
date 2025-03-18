@@ -45,7 +45,7 @@ class CompButtonState extends State<CompButton> {
 
   @override
   Widget build(BuildContext context) {
-    final bool isDisabled = isLoading || widget.onPressed == null;
+    final bool isDisabled = !isLoading && widget.onPressed == null;
 
     return Container(
       padding: widget.paddingContent,

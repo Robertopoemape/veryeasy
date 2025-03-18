@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:veryeasy/core/router/router_provider.gr.dart';
 
+import '../../../components/components.dart';
 import '../../../core/core.dart';
 import '../../../src/src.dart';
 
@@ -35,23 +36,8 @@ class InventoryCard extends StatelessWidget {
         ),
         child: Row(
           children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(ds8),
-              child: Image.network(
-                item.image,
-                width: ds60,
-                height: ds60,
-                fit: BoxFit.cover,
-                errorBuilder: (_, __, ___) => Container(
-                  width: ds60,
-                  height: ds60,
-                  color: ComColors.black200,
-                  child: const Center(
-                    child: Icon(Icons.image_not_supported,
-                        color: ComColors.red500),
-                  ),
-                ),
-              ),
+            CompImageSvg(
+              pathNetwork: item.image,
             ),
             space12,
             Expanded(

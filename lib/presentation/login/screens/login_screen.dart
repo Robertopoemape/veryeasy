@@ -2,7 +2,6 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_svg/svg.dart';
 import '../../../components/components.dart';
 import '../../../core/core.dart';
 import '../../../src/services/auth/auth_service.dart';
@@ -31,10 +30,8 @@ class LoginScreen extends ConsumerWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SvgPicture.asset(
-                'assets/img/svg/user.svg',
-                height: ds200,
-                width: ds200,
+              CompImageSvg(
+                pathNetwork: 'assets/img/svg/user.svg',
               ),
               gap40,
               CompInputText(

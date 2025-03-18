@@ -113,6 +113,9 @@ class CreateProductScreen extends ConsumerWidget {
             CreateProductCamera(),
           ],
         ),
+        CompImageSvg(
+          pathNetwork: 'assets/img/png/not-img.png',
+        ),
       ],
     );
   }

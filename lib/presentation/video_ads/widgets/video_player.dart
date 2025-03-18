@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:veryeasy/presentation/video_ads/providers/video_ad_notifier.dart';
 
+import '../../../components/components.dart';
 import '../../../core/core.dart';
 import '../../../src/entities/entities.dart';
 
@@ -20,7 +21,7 @@ class VideoPlayer extends ConsumerWidget {
     final videoAdsNotifier = ref.read(videoAdNotifierProvider.notifier);
 
     return Card(
-      elevation: 4,
+      elevation: ds4,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(ds12)),
       child: InkWell(
         onTap: () => videoAdsNotifier.launchVideoUrl(context, video.videoUrl),
@@ -28,21 +29,8 @@ class VideoPlayer extends ConsumerWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            ClipRRect(
-              borderRadius:
-                  const BorderRadius.vertical(top: Radius.circular(ds12)),
-              child: Image.network(
-                video.videoUrl,
-                height: ds150,
-                width: double.infinity,
-                fit: BoxFit.cover,
-                errorBuilder: (_, __, ___) => Container(
-                  height: ds150,
-                  color: ComColors.black200,
-                  child: const Center(
-                      child: Icon(Icons.error, color: ComColors.red500)),
-                ),
-              ),
+            CompImageSvg(
+              pathNetwork: video.videoUrl,
             ),
             Padding(
               padding: const EdgeInsets.all(ds12),

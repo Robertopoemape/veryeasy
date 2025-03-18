@@ -1,3 +1,4 @@
+export 'comp_image_svg.dart';
 export 'comp_button.dart';
 export 'comp_date_picker.dart';
 export 'comp_divider.dart';

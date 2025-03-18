@@ -24,13 +24,8 @@ class ProductCard extends StatelessWidget {
           Container(
             alignment: Alignment.center,
             height: ds120,
-            child: ClipRRect(
-              borderRadius:
-                  const BorderRadius.vertical(top: Radius.circular(ds12)),
-              child: Image.asset(
-                product.image,
-                fit: BoxFit.cover,
-              ),
+            child: CompImageSvg(
+              pathNetwork: product.image,
             ),
           ),
           Padding(
