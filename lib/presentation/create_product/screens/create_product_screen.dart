@@ -178,9 +178,9 @@ class CreateProductScreen extends ConsumerWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: ds16),
       child: CompButton(
-        onPressed: () async {
-          await productNotifier.saveProduct();
-        },
+        onPressed: !productNotifier.isValid
+            ? null
+            : () async => await productNotifier.saveProduct(),
         name: 'Guardar',
       ),
     );

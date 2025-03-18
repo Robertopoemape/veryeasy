@@ -60,7 +60,6 @@ class CreateProductNotifier extends _$CreateProductNotifier {
 
   Future<void> saveProduct() async {
     try {
-      validateProduct();
       await FirebaseFirestore.instance
           .collection('products')
           .add(state.toJson());
@@ -70,11 +69,14 @@ class CreateProductNotifier extends _$CreateProductNotifier {
     }
   }
 
-  void validateProduct() {
-    if (state.name.isEmpty || state.stock <= 0 || state.price <= 0) {
-      throw Exception('Por favor, completa todos los campos requeridos.');
-    }
-  }
+  bool get isValid =>
+      state.name.isNotEmpty &&
+      state.stock > 0 &&
+      state.price > 0 &&
+      state.unitMeasurement.isNotEmpty &&
+      state.contentUnit > 0 &&
+      state.description.isNotEmpty &&
+      state.image.isNotEmpty;
 
   void resetState() {
     state = Product.empty();
