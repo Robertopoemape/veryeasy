@@ -95,26 +95,50 @@ class InventoryNotifier extends _$InventoryNotifier {
       Product(
         id: '1',
         name: 'Producto A',
-        quantity: 10,
+        stock: 10,
         price: 19.99,
         image: 'https://via.placeholder.com/100',
         description: 'Descripción del Producto A',
+        brand: '',
+        contentUnit: 0,
+        unitMeasurement: '',
+        minStock: 0,
+        sku: '',
+        barcode: '',
+        weight: 0,
+        dimensions: '',
       ),
       Product(
         id: '2',
         name: 'Producto B',
-        quantity: 5,
+        stock: 5,
         price: 29.99,
         image: 'https://via.placeholder.com/100',
         description: 'Descripción del Producto B',
+        brand: '',
+        contentUnit: 0,
+        unitMeasurement: '',
+        minStock: 0,
+        sku: '',
+        barcode: '',
+        weight: 0,
+        dimensions: '',
       ),
       Product(
         id: '3',
         name: 'Producto C',
-        quantity: 20,
+        stock: 20,
         price: 9.99,
         image: 'https://via.placeholder.com/100',
         description: 'Descripción del Producto C',
+        brand: '',
+        contentUnit: 0,
+        unitMeasurement: '',
+        minStock: 0,
+        sku: '',
+        barcode: '',
+        weight: 0,
+        dimensions: '',
       ),
     ];
   }
@@ -149,7 +173,7 @@ class InventoryNotifier extends _$InventoryNotifier {
         case 'Nombre':
           return a.name.compareTo(b.name);
         case 'Cantidad':
-          return a.quantity.compareTo(b.quantity);
+          return a.stock.compareTo(b.stock);
         case 'Precio':
           return a.price.compareTo(b.price);
         default:

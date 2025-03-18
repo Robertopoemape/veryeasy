@@ -1,41 +1,82 @@
-import 'dart:developer';
-import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:image_picker/image_picker.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../../core/core.dart';
+import '../../../src/src.dart';
 
 part 'create_product_notifier.g.dart';
 
 @riverpod
 class CreateProductNotifier extends _$CreateProductNotifier {
+  final ImagePicker _picker = ImagePicker();
+
   @override
-  FutureOr<File?> build() async {
-    return null;
+  Product build() {
+    return Product.empty();
   }
 
-  final ImagePicker picker = ImagePicker();
+  void updateField<T>({
+    required String fieldName,
+    required T value,
+  }) {
+    state = state.copyWith(
+      name: fieldName == 'name' ? value as String : state.name,
+      stock: fieldName == 'stock' ? value as int : state.stock,
+      price: fieldName == 'price' ? value as double : state.price,
+      image: fieldName == 'image' ? value as String : state.image,
+      description:
+          fieldName == 'description' ? value as String : state.description,
+      brand: fieldName == 'brand' ? value as String : state.brand,
+      unitMeasurement: fieldName == 'unitMeasurement'
+          ? value as String
+          : state.unitMeasurement,
+      contentUnit:
+          fieldName == 'contentUnit' ? value as int : state.contentUnit,
+      minStock: fieldName == 'minStock' ? value as int : state.minStock,
+      sku: fieldName == 'sku' ? value as String : state.sku,
+      barcode: fieldName == 'barcode' ? value as String : state.barcode,
+      weight: fieldName == 'weight' ? value as double : state.weight,
+      dimensions:
+          fieldName == 'dimensions' ? value as String : state.dimensions,
+    );
+  }
 
   Future<void> openGallery() async {
-    XFile? imageFile = await picker.pickImage(source: ImageSource.gallery);
+    final XFile? imageFile =
+        await _picker.pickImage(source: ImageSource.gallery);
     if (imageFile != null) {
-      state = AsyncValue.data(File(imageFile.path));
-      log("Imagen seleccionada: ${imageFile.path}");
-    } else {
-      log("No se seleccionó imagen");
+      updateField(fieldName: 'image', value: imageFile.path);
     }
   }
 
   Future<void> openCamera() async {
-    if (await PermissionHandler.camera()) {
-      XFile? imageFile = await picker.pickImage(source: ImageSource.camera);
-      if (imageFile != null) {
-        state = AsyncValue.data(File(imageFile.path));
-        log("📸 Imagen capturada: ${imageFile.path}");
-      } else {
-        log("No se capturó imagen");
-      }
+    final XFile? imageFile =
+        await _picker.pickImage(source: ImageSource.camera);
+    if (imageFile != null) {
+      updateField(fieldName: 'image', value: imageFile.path);
     }
+  }
+
+  Future<void> saveProduct() async {
+    try {
+      validateProduct();
+      await FirebaseFirestore.instance
+          .collection('products')
+          .add(state.toJson());
+      resetState();
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
+
+  void validateProduct() {
+    if (state.name.isEmpty || state.stock <= 0 || state.price <= 0) {
+      throw Exception('Por favor, completa todos los campos requeridos.');
+    }
+  }
+
+  void resetState() {
+    state = Product.empty();
   }
 }

@@ -1,192 +1,185 @@
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:auto_route/annotations.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../components/components.dart';
 import '../../../core/core.dart';
+import '../providers/create_product_notifier.dart';
 import '../widgets/widgets.dart';
 
 @RoutePage()
-class CreateProductScreen extends StatefulWidget {
+class CreateProductScreen extends ConsumerWidget {
   const CreateProductScreen({super.key});
 
   @override
-  _CreateProductScreenState createState() => _CreateProductScreenState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final productNotifier = ref.watch(createProductNotifierProvider.notifier);
 
-class _CreateProductScreenState extends State<CreateProductScreen> {
-  final _formKey = GlobalKey<FormState>();
-  final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _stockController = TextEditingController();
-  final TextEditingController _priceController = TextEditingController();
-  final TextEditingController _imageController = TextEditingController();
-  final TextEditingController _descriptionController = TextEditingController();
-
-  final TextEditingController _brandController = TextEditingController();
-  final TextEditingController _minStockController = TextEditingController();
-  final TextEditingController _unitController = TextEditingController();
-  final TextEditingController _contentUnitController = TextEditingController();
-  final TextEditingController _skuController = TextEditingController();
-  final TextEditingController _barcodeController = TextEditingController();
-  final TextEditingController _weightController = TextEditingController();
-  final TextEditingController _dimensionsController = TextEditingController();
-
-  Future<void> _saveProduct() async {
-    if (_formKey.currentState!.validate()) {
-      final product = {
-        'name': _nameController.text,
-        'quantity': int.tryParse(_stockController.text) ?? 0,
-        'price': double.tryParse(_priceController.text) ?? 0.0,
-        'image': _imageController.text,
-        'description': _descriptionController.text,
-      };
-
-      await FirebaseFirestore.instance.collection('products').add(product);
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Producto creado con éxito')),
-      );
-      Navigator.pop(context);
-    }
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Registro de Producto', style: ComTextStyle.h6),
+        centerTitle: true,
+        backgroundColor: ComColors.primaryColor,
+      ),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(ds16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _buildMainDataSection(productNotifier),
+            gap8,
+            ComDivider(),
+            gap8,
+            _buildAdditionalInfoSection(productNotifier),
+            gap8,
+            ComDivider(),
+            gap8,
+            _buildAdvancedAttributesSection(productNotifier),
+            gap8,
+            _buildSaveButton(productNotifier),
+          ],
+        ),
+      ),
+    );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: Text(
-            'Registro de Producto',
-            style: ComTextStyle.h6,
-          ),
-          centerTitle: true,
-          backgroundColor: ComColors.primaryColor,
+  Widget _buildMainDataSection(CreateProductNotifier productNotifier) {
+    return CreateProductCard(
+      columnList: [
+        CreateProductSectionTitle(title: 'Datos principales'),
+        gap8,
+        CompInputText(
+          labelText: 'Nombre del producto',
+          onChangedText: (value) =>
+              productNotifier.updateField(fieldName: 'name', value: value),
         ),
-        body: Padding(
-          padding: const EdgeInsets.all(ds16),
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                CreateProductCard(
-                  columnList: [
-                    CreateProductSectionTitle(title: 'Datos principales'),
-                    gap8,
-                    CompInputText(
-                      controller: _nameController,
-                      labelText: 'Nombre del producto',
-                    ),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: CompInputText(
-                            controller: _stockController,
-                            labelText: 'Stock',
-                            keyboardType: TextInputType.number,
-                          ),
-                        ),
-                        space16,
-                        Expanded(
-                          child: CompInputText(
-                            controller: _priceController,
-                            labelText: 'Precio',
-                            keyboardType: TextInputType.number,
-                          ),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: CompDropdown(
-                            items: ['UND', 'CAJA', 'PQT', 'BOlSA'],
-                            controller: _unitController,
-                            hintText: 'U.M',
-                          ),
-                        ),
-                        space16,
-                        Expanded(
-                          child: CompInputText(
-                            controller: _contentUnitController,
-                            labelText: 'Contenido',
-                            keyboardType: TextInputType.number,
-                          ),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: CompTextArea(
-                            controller: _descriptionController,
-                            labelText: 'Descripción',
-                          ),
-                        ),
-                        CreateProductCamera(),
-                      ],
-                    ),
-                    CompButton(
-                      onPressed: () async {
-                        await _saveProduct();
-                      },
-                      name: 'Guardar',
-                    ),
-                  ],
+        Row(
+          children: [
+            Expanded(
+              child: CompInputText(
+                labelText: 'Stock',
+                keyboardType: TextInputType.number,
+                onChangedText: (value) => productNotifier.updateField(
+                  fieldName: 'stock',
+                  value: int.tryParse(value) ?? 0,
                 ),
-                gap8,
-                ComDivider(),
-                gap8,
-                CreateProductCard(
-                  columnList: [
-                    CreateProductSectionTitle(title: 'Información adicional'),
-                    gap8,
-                    CompInputText(
-                      controller: _brandController,
-                      labelText: 'Marca',
-                    ),
-                    CompDropdown(
-                      items: ['Electrónica', 'Ropa', 'Alimentos'],
-                      hintText: 'Familia',
-                      onChanged: (value) {},
-                    ),
-                    CompDropdown(
-                      items: ['Electrónica', 'Ropa', 'Alimentos'],
-                      hintText: 'Categoría',
-                      onChanged: (value) {},
-                    ),
-                    CompInputText(
-                      controller: _minStockController,
-                      labelText: 'Stock mínimo',
-                      keyboardType: TextInputType.number,
-                    ),
-                  ],
-                ),
-                gap8,
-                ComDivider(),
-                gap8,
-                CreateProductCard(
-                  columnList: [
-                    CreateProductSectionTitle(title: 'Atributos avanzados'),
-                    CompInputText(
-                      controller: _skuController,
-                      labelText: 'SKU',
-                    ),
-                    CompInputText(
-                      controller: _barcodeController,
-                      labelText: 'Código de barras',
-                    ),
-                    CompInputText(
-                      controller: _weightController,
-                      labelText: 'Peso (Kg)',
-                      keyboardType: TextInputType.number,
-                    ),
-                    CompInputText(
-                      controller: _dimensionsController,
-                      labelText: 'Dimensiones (Alto x Ancho x Profundidad)',
-                    ),
-                  ],
-                ),
-              ],
+              ),
             ),
+            space16,
+            Expanded(
+              child: CompInputText(
+                labelText: 'Precio',
+                keyboardType: TextInputType.number,
+                onChangedText: (value) => productNotifier.updateField(
+                  fieldName: 'price',
+                  value: double.tryParse(value) ?? 0.0,
+                ),
+              ),
+            ),
+          ],
+        ),
+        Row(
+          children: [
+            Expanded(
+              child: CompDropdown(
+                items: ['UND', 'CAJA', 'PQT', 'BOLSA'],
+                hintText: 'U.M',
+                onChanged: (value) => productNotifier.updateField(
+                    fieldName: 'unitMeasurement', value: value!),
+              ),
+            ),
+            space16,
+            Expanded(
+              child: CompInputText(
+                labelText: 'Contenido',
+                keyboardType: TextInputType.number,
+                onChangedText: (value) => productNotifier.updateField(
+                  fieldName: 'contentUnit',
+                  value: int.tryParse(value) ?? 0,
+                ),
+              ),
+            ),
+          ],
+        ),
+        Row(
+          children: [
+            Expanded(
+              child: CompTextArea(
+                labelText: 'Descripción',
+                onChanged: (value) => productNotifier.updateField(
+                    fieldName: 'description', value: value),
+              ),
+            ),
+            CreateProductCamera(),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget _buildAdditionalInfoSection(CreateProductNotifier productNotifier) {
+    return CreateProductCard(
+      columnList: [
+        CreateProductSectionTitle(title: 'Información adicional'),
+        gap8,
+        CompInputText(
+          labelText: 'Marca',
+          onChangedText: (value) =>
+              productNotifier.updateField(fieldName: 'brand', value: value),
+        ),
+        CompInputText(
+          labelText: 'Stock mínimo',
+          keyboardType: TextInputType.number,
+          onChangedText: (value) => productNotifier.updateField(
+            fieldName: 'minStock',
+            value: int.tryParse(value) ?? 0,
           ),
-        ));
+        ),
+      ],
+    );
+  }
+
+  Widget _buildAdvancedAttributesSection(
+      CreateProductNotifier productNotifier) {
+    return CreateProductCard(
+      columnList: [
+        CreateProductSectionTitle(title: 'Atributos avanzados'),
+        CompInputText(
+          labelText: 'SKU',
+          onChangedText: (value) =>
+              productNotifier.updateField(fieldName: 'sku', value: value),
+        ),
+        CompInputText(
+          labelText: 'Código de barras',
+          onChangedText: (value) =>
+              productNotifier.updateField(fieldName: 'barcode', value: value),
+        ),
+        CompInputText(
+          labelText: 'Peso (Kg)',
+          keyboardType: TextInputType.number,
+          onChangedText: (value) => productNotifier.updateField(
+            fieldName: 'weight',
+            value: double.tryParse(value) ?? 0.0,
+          ),
+        ),
+        CompInputText(
+          labelText: 'Dimensiones (Alto x Ancho x Profundidad)',
+          onChangedText: (value) => productNotifier.updateField(
+              fieldName: 'dimensions', value: value),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildSaveButton(CreateProductNotifier productNotifier) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: ds16),
+      child: CompButton(
+        onPressed: () async {
+          await productNotifier.saveProduct();
+        },
+        name: 'Guardar',
+      ),
+    );
   }
 }

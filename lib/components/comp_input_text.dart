@@ -4,8 +4,8 @@ import '../core/core.dart';
 
 class CompInputText extends StatefulWidget {
   const CompInputText({
-    required this.controller,
     required this.labelText,
+    this.controller,
     this.onChangedText,
     this.widthBorder = ds1,
     this.borderRadius = ds8,

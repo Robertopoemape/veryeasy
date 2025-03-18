@@ -66,7 +66,7 @@ class InventoryCard extends StatelessWidget {
                   ),
                   gap4,
                   Text(
-                    'Cantidad: ${item.quantity}',
+                    'Cantidad: ${item.stock}',
                     style: ComTextStyle.caption,
                   ),
                   gap4,

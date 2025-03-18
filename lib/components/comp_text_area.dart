@@ -5,8 +5,8 @@ import '../core/core.dart';
 class CompTextArea extends StatefulWidget {
   const CompTextArea({
     super.key,
-    required this.controller,
     required this.labelText,
+    this.controller,
     this.maxLines = ints8,
     this.minLines = ints1,
     this.borderColor,
