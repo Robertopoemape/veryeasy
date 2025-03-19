@@ -1,4 +1,9 @@
+export 'additional_info_product.dart';
+export 'advanced_attributes_product.dart';
 export 'create_product_card.dart';
 export 'create_product_image.dart';
 export 'create_product_section_title.dart';
-export 'show_dialog_selected.dart';
+export 'image_container.dart';
+export 'main_data_product.dart';
+export 'save_button.dart';
+export 'show_dialog_camera.dart';

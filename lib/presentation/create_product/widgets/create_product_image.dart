@@ -19,7 +19,7 @@ class CreateProductCamera extends ConsumerWidget {
         width: ds50,
         child: ElevatedButton(
           onPressed: () {
-            showDialogSelected(
+            showDialogCamera(
               context: context,
               onTapGalery: () {
                 createProductNotifier.openGallery();

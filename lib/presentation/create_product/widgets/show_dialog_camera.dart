@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../core/core.dart';
 
-Future<void> showDialogSelected({
+Future<void> showDialogCamera({
   required BuildContext context,
   required VoidCallback onTapGalery,
   required VoidCallback onTapCamera,
