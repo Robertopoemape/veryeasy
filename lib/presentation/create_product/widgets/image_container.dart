@@ -23,6 +23,7 @@ class ImageContainer extends ConsumerWidget {
             pathNetwork: createProductNotifier.image,
             width: ds250,
             height: ds250,
+            fit: BoxFit.cover,
           ),
           gap8,
         ],

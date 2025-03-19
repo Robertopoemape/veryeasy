@@ -46,24 +46,29 @@ class _CompImageSvgState extends State<CompImageSvg> {
 
   void redirectionImage() {
     var uuiD = Uuid().v4();
-    key = '$uuiD${widget.pathNetwork}';
+    String newKey = '$uuiD${widget.pathNetwork}';
+    ImgTypeData newImgTypeData;
 
     if (widget.pathNetwork.startsWith('base64:')) {
-      imgTypeData = ImgTypeData.imgBase64;
+      newImgTypeData = ImgTypeData.imgBase64;
     } else if (widget.pathNetwork.contains('http')) {
-      imgTypeData = widget.pathNetwork.contains('.svg')
+      newImgTypeData = widget.pathNetwork.contains('.svg')
           ? ImgTypeData.imgSVG
           : ImgTypeData.imgFile;
     } else {
-      imgTypeData = widget.pathNetwork.contains('.svg')
+      newImgTypeData = widget.pathNetwork.contains('.svg')
           ? ImgTypeData.imgLocalSVG
           : ['.png', '.jpg', '.jpeg'].any(widget.pathNetwork.contains)
               ? ImgTypeData.imgLocalPNG
               : ImgTypeData.imgLoading;
     }
 
-    if (mounted) {
-      setState(() {});
+    if (newImgTypeData != imgTypeData || newKey != key) {
+      imgTypeData = newImgTypeData;
+      key = newKey;
+      if (mounted) {
+        setState(() {});
+      }
     }
   }
 
@@ -157,7 +162,7 @@ class _CompImageSvgState extends State<CompImageSvg> {
       padding: widget.padding ?? EdgeInsets.zero,
       child: AnimatedOpacity(
         opacity: ds1,
-        duration: const Duration(seconds: ints1),
+        duration: const Duration(milliseconds: ints300),
         curve: Curves.easeOut,
         child: child,
       ),
@@ -192,11 +197,6 @@ class _CompImageSvgState extends State<CompImageSvg> {
   }
 
   Widget _crearWidgetError() {
-    Future.delayed(const Duration(seconds: ints2), () {
-      if (mounted) {
-        setState(() {});
-      }
-    });
     return _crearSkeleton();
   }
 }

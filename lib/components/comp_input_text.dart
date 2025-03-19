@@ -39,34 +39,12 @@ class CompInputText extends StatefulWidget {
 class _CompInputTextState extends State<CompInputText> {
   late bool _isObscure;
   Color? borderColor;
-  TextEditingController? internalController;
 
   @override
   void initState() {
     super.initState();
     borderColor = widget.borderColor ?? ComColors.black500;
-    internalController = widget.controller ?? TextEditingController();
     _isObscure = widget.obscureText;
-    internalController!.addListener(() {
-      if (mounted) {
-        setState(() {
-          if (internalController!.text.isEmpty) {
-            borderColor = ComColors.black500;
-          }
-          if (widget.initialValue != null) {
-            internalController!.text = widget.initialValue!;
-          }
-        });
-      }
-    });
-  }
-
-  @override
-  void dispose() {
-    if (widget.controller == null) {
-      internalController?.dispose();
-    }
-    super.dispose();
   }
 
   @override

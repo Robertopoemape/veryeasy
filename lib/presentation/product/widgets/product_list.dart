@@ -20,9 +20,7 @@ class ProductList extends StatelessWidget {
         ? CompListEmpty(
             icon: Icons.store,
             label: 'Productos',
-            onPressed: () {
-              autoRouterPush(context, CreateProductRoute());
-            },
+            onPressed: () => autoRouterPush(context, CreateProductRoute()),
           )
         : SingleChildScrollView(
             child: Wrap(
