@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cached_network_svg_image/cached_network_svg_image.dart';
 import 'package:flutter/material.dart';
@@ -5,7 +7,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:skeletons/skeletons.dart';
 import 'package:uuid/uuid.dart';
 
-import '../core/style/app_colors.dart';
+import '../core/core.dart';
 
 enum ImgTypeData {
   imgSVG,
@@ -13,27 +15,26 @@ enum ImgTypeData {
   imgLoading,
   imgLocalSVG,
   imgLocalPNG,
+  imgBase64,
 }
 
 class CompImageSvg extends StatefulWidget {
-  const CompImageSvg(
-      {required this.pathNetwork,
-      this.width,
-      this.height,
-      this.color,
-      this.padding,
-      this.fit = BoxFit.contain,
-      this.isFile = true,
-      this.isLocal = false,
-      super.key});
+  const CompImageSvg({
+    required this.pathNetwork,
+    this.width,
+    this.height,
+    this.color,
+    this.padding,
+    this.fit = BoxFit.contain,
+    super.key,
+  });
+
   final String pathNetwork;
   final double? width;
   final double? height;
   final Color? color;
   final EdgeInsets? padding;
-  final BoxFit? fit;
-  final bool isFile;
-  final bool isLocal;
+  final BoxFit fit;
 
   @override
   State<CompImageSvg> createState() => _CompImageSvgState();
@@ -42,37 +43,27 @@ class CompImageSvg extends StatefulWidget {
 class _CompImageSvgState extends State<CompImageSvg> {
   ImgTypeData imgTypeData = ImgTypeData.imgLoading;
   String key = '';
-  bool _errorEnCarga = false;
 
   void redirectionImage() {
     var uuiD = Uuid().v4();
     key = '$uuiD${widget.pathNetwork}';
-    if (widget.pathNetwork.contains('http')) {
-      if (widget.pathNetwork.contains('.svg')) {
-        imgTypeData = ImgTypeData.imgSVG;
-      }
-      if (widget.pathNetwork.contains('.png') ||
-          widget.pathNetwork.contains('.jpg') ||
-          widget.pathNetwork.contains('.jpeg')) {
-        imgTypeData = ImgTypeData.imgFile;
-      }
-      if (mounted) {
-        setState(() {});
-      }
-      return;
+
+    if (widget.pathNetwork.startsWith('base64:')) {
+      imgTypeData = ImgTypeData.imgBase64;
+    } else if (widget.pathNetwork.contains('http')) {
+      imgTypeData = widget.pathNetwork.contains('.svg')
+          ? ImgTypeData.imgSVG
+          : ImgTypeData.imgFile;
     } else {
-      if (widget.pathNetwork.contains('.svg')) {
-        imgTypeData = ImgTypeData.imgLocalSVG;
-      }
-      if (widget.pathNetwork.contains('.png') ||
-          widget.pathNetwork.contains('.jpg') ||
-          widget.pathNetwork.contains('.jpeg')) {
-        imgTypeData = ImgTypeData.imgLocalPNG;
-      }
-      if (mounted) {
-        setState(() {});
-      }
-      return;
+      imgTypeData = widget.pathNetwork.contains('.svg')
+          ? ImgTypeData.imgLocalSVG
+          : ['.png', '.jpg', '.jpeg'].any(widget.pathNetwork.contains)
+              ? ImgTypeData.imgLocalPNG
+              : ImgTypeData.imgLoading;
+    }
+
+    if (mounted) {
+      setState(() {});
     }
   }
 
@@ -88,54 +79,53 @@ class _CompImageSvgState extends State<CompImageSvg> {
   Widget build(BuildContext context) {
     switch (imgTypeData) {
       case ImgTypeData.imgLocalPNG:
-        return Padding(
-          padding: widget.padding ?? const EdgeInsets.all(0),
+        return _buildImageWithPlaceholder(
           child: Image.asset(
+            widget.pathNetwork,
             key: ValueKey(key),
             height: widget.height,
             width: widget.width,
-            fit: widget.fit ?? BoxFit.contain,
+            fit: widget.fit,
             color: widget.color,
-            widget.pathNetwork,
             errorBuilder: (context, error, stackTrace) => _crearWidgetError(),
-            frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
-              if (wasSynchronouslyLoaded) {
-                return child;
-              }
-              return AnimatedOpacity(
-                opacity: frame == null ? 0 : 1,
-                duration: const Duration(seconds: 1),
-                curve: Curves.easeOut,
-                child: child,
-              );
-            },
+          ),
+        );
+
+      case ImgTypeData.imgBase64:
+        return _buildImageWithPlaceholder(
+          child: Image.memory(
+            base64Decode(widget.pathNetwork.replaceFirst('base64:', '')),
+            key: ValueKey(key),
+            height: widget.height,
+            width: widget.width,
+            fit: widget.fit,
+            color: widget.color,
+            errorBuilder: (context, error, stackTrace) => _crearWidgetError(),
           ),
         );
 
       case ImgTypeData.imgLocalSVG:
-        return Padding(
-          padding: widget.padding ?? const EdgeInsets.all(0),
+        return _buildImageWithPlaceholder(
           child: SvgPicture.asset(
+            widget.pathNetwork,
             key: ValueKey(key),
             height: widget.height,
             width: widget.width,
-            fit: widget.fit ?? BoxFit.contain,
+            fit: widget.fit,
             colorFilter: ColorFilter.mode(
                 widget.color ?? ComColors.bgcblack, BlendMode.srcIn),
-            widget.pathNetwork,
             placeholderBuilder: (BuildContext context) => _crearSkeleton(),
           ),
         );
 
       case ImgTypeData.imgFile:
-        return Padding(
-          padding: widget.padding ?? const EdgeInsets.all(0),
+        return _buildImageWithPlaceholder(
           child: CachedNetworkImage(
             key: ValueKey(key),
             imageUrl: widget.pathNetwork,
             height: widget.height,
             width: widget.width,
-            fit: widget.fit ?? BoxFit.contain,
+            fit: widget.fit,
             color: widget.color,
             placeholder: (context, url) => _crearSkeleton(),
             errorWidget: (context, url, error) => _crearWidgetError(),
@@ -143,70 +133,70 @@ class _CompImageSvgState extends State<CompImageSvg> {
         );
 
       case ImgTypeData.imgSVG:
-        return CachedNetworkSVGImage(
-          key: ValueKey(key),
-          widget.pathNetwork,
-          height: widget.height,
-          width: widget.width,
-          fit: widget.fit ?? BoxFit.contain,
-          colorFilter: ColorFilter.mode(
-              widget.color ?? ComColors.bgcblack, BlendMode.srcIn),
-          placeholder: _crearSkeleton(),
-          errorWidget: _crearWidgetError(),
+        return _buildImageWithPlaceholder(
+          child: CachedNetworkSVGImage(
+            key: ValueKey(key),
+            widget.pathNetwork,
+            height: widget.height,
+            width: widget.width,
+            fit: widget.fit,
+            colorFilter: ColorFilter.mode(
+                widget.color ?? ComColors.bgcblack, BlendMode.srcIn),
+            placeholder: _crearSkeleton(),
+            errorWidget: _crearWidgetError(),
+          ),
         );
 
       default:
-        return Center(
-          child: widget.pathNetwork.contains('background')
-              ? CircularProgressIndicator(
-                  color: Colors.transparent,
-                )
-              : Skeleton(
-                  isLoading: true,
-                  skeleton: SkeletonAvatar(
-                    style: SkeletonAvatarStyle(
-                      shape: BoxShape.rectangle,
-                      height: widget.height,
-                      width: widget.width,
-                      maxHeight: 370,
-                      maxWidth: 300,
-                      padding:
-                          EdgeInsets.all((widget.height ?? 0) >= 300 ? 0 : 4),
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                  ),
-                  child: SizedBox.shrink()),
-        );
+        return _buildErrorOrLoading();
     }
   }
 
-  Widget _crearSkeleton() => Skeleton(
-        isLoading: true,
-        skeleton: SkeletonAvatar(
-          style: SkeletonAvatarStyle(
-            shape: BoxShape.rectangle,
-            height: widget.height,
-            width: widget.width,
-            maxHeight: 370,
-            maxWidth: 300,
-            padding: EdgeInsets.all((widget.height ?? 0) >= 300 ? 0 : 4),
-            borderRadius: BorderRadius.circular(16),
-          ),
+  Widget _buildImageWithPlaceholder({required Widget child}) {
+    return Padding(
+      padding: widget.padding ?? EdgeInsets.zero,
+      child: AnimatedOpacity(
+        opacity: ds1,
+        duration: const Duration(seconds: ints1),
+        curve: Curves.easeOut,
+        child: child,
+      ),
+    );
+  }
+
+  Widget _buildErrorOrLoading() {
+    return Center(
+      child: widget.pathNetwork.contains('background')
+          ? CircularProgressIndicator(color: Colors.transparent)
+          : _crearSkeleton(),
+    );
+  }
+
+  Widget _crearSkeleton() {
+    return Skeleton(
+      isLoading: true,
+      skeleton: SkeletonAvatar(
+        style: SkeletonAvatarStyle(
+          shape: BoxShape.rectangle,
+          height: widget.height,
+          width: widget.width,
+          maxHeight: ds370,
+          maxWidth: ds300,
+          padding:
+              EdgeInsets.all((widget.height ?? ds0) >= ints300 ? ds0 : ds4),
+          borderRadius: BorderRadius.circular(ds16),
         ),
-        child: SizedBox.shrink(),
-      );
+      ),
+      child: const SizedBox.shrink(),
+    );
+  }
 
   Widget _crearWidgetError() {
-    if (!_errorEnCarga) {
-      _errorEnCarga = true;
-      Future.delayed(Duration(seconds: 2), () {
-        if (mounted) {
-          setState(() {
-            _errorEnCarga = false;
-          });
-        }
-      });
-    }
+    Future.delayed(const Duration(seconds: ints2), () {
+      if (mounted) {
+        setState(() {});
+      }
+    });
     return _crearSkeleton();
   }
 }

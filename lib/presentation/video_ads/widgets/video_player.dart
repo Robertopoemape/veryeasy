@@ -30,7 +30,7 @@ class VideoPlayer extends ConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             CompImageSvg(
-              pathNetwork: video.videoUrl,
+              pathNetwork: 'assets/img/png/user-png.dart',
             ),
             Padding(
               padding: const EdgeInsets.all(ds12),

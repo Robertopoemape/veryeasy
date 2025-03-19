@@ -7,7 +7,7 @@ class ComDivider extends StatelessWidget {
     this.indent = ds40,
     this.endIndent = ds40,
     this.thickness = ds1,
-    this.color = ComColors.blue500,
+    this.color = ComColors.green600,
     super.key,
   });
 

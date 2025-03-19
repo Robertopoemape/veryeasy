@@ -1,9 +1,14 @@
+import 'dart:convert';
+import 'dart:developer';
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:image_picker/image_picker.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../src/src.dart';
+import 'create_product_state.dart';
 
 part 'create_product_notifier.g.dart';
 
@@ -12,8 +17,12 @@ class CreateProductNotifier extends _$CreateProductNotifier {
   final ImagePicker _picker = ImagePicker();
 
   @override
-  Product build() {
-    return Product.empty();
+  CreateProductState build() {
+    return CreateProductState(
+      product: Product.empty(),
+      isLoading: false,
+      errorMessage: null,
+    );
   }
 
   void updateField<T>({
@@ -21,64 +30,107 @@ class CreateProductNotifier extends _$CreateProductNotifier {
     required T value,
   }) {
     state = state.copyWith(
-      name: fieldName == 'name' ? value as String : state.name,
-      stock: fieldName == 'stock' ? value as int : state.stock,
-      price: fieldName == 'price' ? value as double : state.price,
-      image: fieldName == 'image' ? value as String : state.image,
-      description:
-          fieldName == 'description' ? value as String : state.description,
-      brand: fieldName == 'brand' ? value as String : state.brand,
-      unitMeasurement: fieldName == 'unitMeasurement'
-          ? value as String
-          : state.unitMeasurement,
-      contentUnit:
-          fieldName == 'contentUnit' ? value as int : state.contentUnit,
-      minStock: fieldName == 'minStock' ? value as int : state.minStock,
-      sku: fieldName == 'sku' ? value as String : state.sku,
-      barcode: fieldName == 'barcode' ? value as String : state.barcode,
-      weight: fieldName == 'weight' ? value as double : state.weight,
-      dimensions:
-          fieldName == 'dimensions' ? value as String : state.dimensions,
+      product: state.product.copyWith(
+        name: fieldName == 'name' ? value as String : state.product.name,
+        stock: fieldName == 'stock' ? value as int : state.product.stock,
+        price: fieldName == 'price' ? value as double : state.product.price,
+        image: fieldName == 'image' ? value as String : state.product.image,
+        description: fieldName == 'description'
+            ? value as String
+            : state.product.description,
+        brand: fieldName == 'brand' ? value as String : state.product.brand,
+        unitMeasurement: fieldName == 'unitMeasurement'
+            ? value as String
+            : state.product.unitMeasurement,
+        contentUnit: fieldName == 'contentUnit'
+            ? value as int
+            : state.product.contentUnit,
+        minStock:
+            fieldName == 'minStock' ? value as int : state.product.minStock,
+        sku: fieldName == 'sku' ? value as String : state.product.sku,
+        barcode:
+            fieldName == 'barcode' ? value as String : state.product.barcode,
+        weight: fieldName == 'weight' ? value as double : state.product.weight,
+        dimensions: fieldName == 'dimensions'
+            ? value as String
+            : state.product.dimensions,
+      ),
     );
   }
 
   Future<void> openGallery() async {
-    final XFile? imageFile =
-        await _picker.pickImage(source: ImageSource.gallery);
-    if (imageFile != null) {
-      updateField(fieldName: 'image', value: imageFile.path);
+    try {
+      final XFile? imageFile =
+          await _picker.pickImage(source: ImageSource.gallery);
+      if (imageFile != null) {
+        final base64Image = await uploadImageToFirestore(imageFile.path);
+        if (base64Image != null) {
+          updateField(fieldName: 'image', value: 'base64:$base64Image');
+        } else {
+          log('Error: No se pudo codificar la imagen.');
+        }
+      }
+    } catch (e) {
+      log('Error al abrir la galería: $e');
     }
   }
 
   Future<void> openCamera() async {
-    final XFile? imageFile =
-        await _picker.pickImage(source: ImageSource.camera);
-    if (imageFile != null) {
-      updateField(fieldName: 'image', value: imageFile.path);
+    try {
+      final XFile? imageFile =
+          await _picker.pickImage(source: ImageSource.camera);
+      if (imageFile != null) {
+        final base64Image = await uploadImageToFirestore(imageFile.path);
+        if (base64Image != null) {
+          updateField(fieldName: 'image', value: 'base64:$base64Image');
+        }
+      }
+    } catch (e) {
+      log('Error al abrir la cámara: $e');
     }
   }
 
   Future<void> saveProduct() async {
     try {
+      state = state.copyWith(isLoading: true, errorMessage: null);
       await FirebaseFirestore.instance
           .collection('products')
-          .add(state.toJson());
+          .add(state.product.toJson());
       resetState();
     } catch (e) {
-      throw Exception(e.toString());
+      state = state.copyWith(errorMessage: e.toString());
+    } finally {
+      state = state.copyWith(isLoading: false);
     }
   }
 
-  bool get isValid =>
-      state.name.isNotEmpty &&
-      state.stock > 0 &&
-      state.price > 0 &&
-      state.unitMeasurement.isNotEmpty &&
-      state.contentUnit > 0 &&
-      state.description.isNotEmpty &&
-      state.image.isNotEmpty;
+  Future<String?> uploadImageToFirestore(String filePath) async {
+    try {
+      final File file = File(filePath);
+      if (!file.existsSync()) {
+        log('Error: El archivo no existe en la ruta proporcionada.');
+        return null;
+      }
+
+      // Leer el archivo como bytes y codificarlo en Base64
+      final List<int> imageBytes = await file.readAsBytes();
+      final String base64Image = base64Encode(imageBytes);
+
+      log('Imagen codificada en Base64 exitosamente.');
+      return base64Image;
+    } catch (e) {
+      log('Error al codificar la imagen: $e');
+      return null;
+    }
+  }
+
+  bool get isValid => state.product.isValid;
 
   void resetState() {
-    state = Product.empty();
+    state = CreateProductState(
+      product: Product.empty(),
+      isLoading: false,
+      errorMessage: null,
+    );
   }
 }

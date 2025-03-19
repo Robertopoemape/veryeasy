@@ -5,6 +5,8 @@ part 'product.g.dart';
 
 @freezed
 class Product with _$Product {
+  const Product._();
+
   const factory Product({
     required String id,
     required String name,
@@ -25,7 +27,7 @@ class Product with _$Product {
   factory Product.fromJson(Map<String, dynamic> json) =>
       _$ProductFromJson(json);
 
-  factory Product.empty() => const Product(
+  factory Product.empty() => Product(
         id: '',
         name: '',
         stock: 0,
@@ -41,4 +43,14 @@ class Product with _$Product {
         weight: 0.0,
         dimensions: '',
       );
+
+  bool get isValid {
+    return name.isNotEmpty &&
+        stock > 0 &&
+        price > 0 &&
+        unitMeasurement.isNotEmpty &&
+        contentUnit > 0 &&
+        description.isNotEmpty &&
+        image.isNotEmpty;
+  }
 }

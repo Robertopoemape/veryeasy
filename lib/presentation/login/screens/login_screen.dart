@@ -32,6 +32,7 @@ class LoginScreen extends ConsumerWidget {
             children: [
               CompImageSvg(
                 pathNetwork: 'assets/img/svg/user.svg',
+                height: ds150,
               ),
               gap40,
               CompInputText(
