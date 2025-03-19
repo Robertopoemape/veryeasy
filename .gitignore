@@ -46,6 +46,11 @@ app.*.symbols
 # Obfuscation related
 app.*.map.json
 
+android/app/.cxx/
+
+# macOS
+macos/Flutter/GeneratedPluginRegistrant.swift
+
 
 # Ignore generated Flutter files
 linux/flutter/generated_*
