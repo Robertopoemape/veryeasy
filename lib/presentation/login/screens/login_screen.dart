@@ -31,8 +31,8 @@ class LoginScreen extends ConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               CompImageSvg(
-                pathNetwork: 'assets/img/svg/user.svg',
-                height: ds150,
+                pathNetwork: 'assets/img/png/logo-login.png',
+                height: 90,
               ),
               gap40,
               CompInputText(

@@ -51,6 +51,13 @@ android/app/.cxx/
 # macOS
 macos/Flutter/GeneratedPluginRegistrant.swift
 
+# Ignorar iconos en iOS
+ios/Runner/Assets.xcassets/AppIcon.appiconset/*
+
+# Ignorar iconos en Android
+android/app/src/main/res/mipmap-*
+android/app/src/main/res/drawable-*
+ios/Runner/Assets.xcassets/AppIcon.appiconset/*
 
 # Ignore generated Flutter files
 linux/flutter/generated_*

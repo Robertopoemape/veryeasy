@@ -45,6 +45,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
+  flutter_launcher_icons: ^0.14.3
   freezed: ^2.5.8
   json_serializable: ^6.9.4
   build_runner: ^2.4.15
@@ -52,6 +53,13 @@ dev_dependencies:
   riverpod_lint: ^2.6.4
 
   flutter_lints: ^5.0.0
+
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "assets/img/png/logo.png" # Ruta a tu icono
+  adaptive_icon_background: "#FFFFFF" # Opcional (para Android 8+)
+  adaptive_icon_foreground: "assets/img/png/logo.png"
 
 flutter:
   uses-material-design: true
