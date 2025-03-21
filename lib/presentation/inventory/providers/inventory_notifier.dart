@@ -91,54 +91,6 @@ class InventoryNotifier extends _$InventoryNotifier {
   }
 
   Future<List<Product>> _fetchProducts() async {
-    /* await Future.delayed(const Duration(seconds: 2));
-    return [
-      Product(
-        name: 'Producto A',
-        stock: 10,
-        price: 19,
-        image: 'assets/img/png/not-img.png',
-        description: 'Descripción del Producto A',
-        brand: '',
-        contentUnit: 0,
-        unitMeasurement: '',
-        minStock: 0,
-        sku: '',
-        barcode: '',
-        weight: 0,
-        dimensions: '',
-      ),
-      Product(
-        name: 'Producto B',
-        stock: 5,
-        price: 29,
-        image: 'assets/img/png/not-img.png',
-        description: 'Descripción del Producto B',
-        brand: '',
-        contentUnit: 0,
-        unitMeasurement: '',
-        minStock: 0,
-        sku: '',
-        barcode: '',
-        weight: 0,
-        dimensions: '',
-      ),
-      Product(
-        name: 'Producto C',
-        stock: 20,
-        price: 9,
-        image: 'assets/img/png/not-img.png',
-        description: 'Descripción del Producto C',
-        brand: '',
-        contentUnit: 0,
-        unitMeasurement: '',
-        minStock: 0,
-        sku: '',
-        barcode: '',
-        weight: 0,
-        dimensions: '',
-      ),
-    ];*/
     try {
       final querySnapshot =
           await FirebaseFirestore.instance.collection('products').get();
