@@ -28,7 +28,7 @@ class ProductSavedScreen extends StatelessWidget {
               boxShadow: [
                 BoxShadow(
                   color: Colors.black.withOpacity(ds01),
-                  blurRadius: 15,
+                  blurRadius: ds15,
                   offset: const Offset(ds0, ds8),
                 ),
               ],

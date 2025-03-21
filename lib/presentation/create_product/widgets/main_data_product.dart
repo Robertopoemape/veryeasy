@@ -28,6 +28,15 @@ class MainDataProduct extends ConsumerWidget {
             value: value,
           ),
         ),
+        CompInputText(
+          labelText: 'Marca',
+          controller: controller.brandController,
+          initialValue: createProductNotifier.brand,
+          onChangedText: (value) => productNotifier.updateField(
+            fieldName: 'brand',
+            value: value,
+          ),
+        ),
         Row(
           children: [
             Expanded(

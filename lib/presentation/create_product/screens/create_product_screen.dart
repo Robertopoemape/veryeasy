@@ -32,7 +32,7 @@ class CreateProductScreen extends ConsumerWidget {
                 gap8,
                 ComDivider(),
                 gap8,
-                AdditionalIntoProduct(),
+                AdditionalInfoProduct(),
                 gap8,
                 ComDivider(),
                 gap8,

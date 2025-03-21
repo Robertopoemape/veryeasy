@@ -18,6 +18,9 @@ class CreateProductNotifier extends _$CreateProductNotifier {
   late final TextEditingController nameController;
   late final TextEditingController stockController;
   late final TextEditingController priceController;
+  late final TextEditingController brandController;
+  late final TextEditingController familyController;
+  late final TextEditingController categoryController;
   late final TextEditingController unitMeasurement;
   late final TextEditingController contentUnitController;
   late final TextEditingController descriptionController;
@@ -29,6 +32,9 @@ class CreateProductNotifier extends _$CreateProductNotifier {
     nameController = TextEditingController();
     stockController = TextEditingController();
     priceController = TextEditingController();
+    brandController = TextEditingController();
+    familyController = TextEditingController();
+    categoryController = TextEditingController();
     unitMeasurement = TextEditingController();
     contentUnitController = TextEditingController();
     descriptionController = TextEditingController();
@@ -54,6 +60,9 @@ class CreateProductNotifier extends _$CreateProductNotifier {
             ? value as String
             : state.product.description,
         brand: fieldName == 'brand' ? value as String : state.product.brand,
+        family: fieldName == 'family' ? value as String : state.product.family,
+        category:
+            fieldName == 'category' ? value as String : state.product.category,
         unitMeasurement: fieldName == 'unitMeasurement'
             ? value as String
             : state.product.unitMeasurement,
@@ -76,6 +85,9 @@ class CreateProductNotifier extends _$CreateProductNotifier {
       'name': (text) => nameController.text = text,
       'stock': (text) => stockController.text = text,
       'price': (text) => priceController.text = text,
+      'brand': (text) => brandController.text = text,
+      'family': (text) => familyController.text = text,
+      'category': (text) => categoryController.text = text,
       'unitMeasurement': (text) => unitMeasurement.text = text,
       'contentUnit': (text) => contentUnitController.text = text,
       'description': (text) => descriptionController.text = text,
@@ -93,6 +105,9 @@ class CreateProductNotifier extends _$CreateProductNotifier {
           break;
         case 'name':
         case 'description':
+        case 'brand':
+        case 'family':
+        case 'category':
         case 'unitMeasurement':
           formattedValue = value.toString();
         default:
@@ -229,6 +244,9 @@ class CreateProductNotifier extends _$CreateProductNotifier {
     nameController.clear();
     stockController.clear();
     priceController.clear();
+    brandController.clear();
+    familyController.clear();
+    categoryController.clear();
     unitMeasurement.clear();
     contentUnitController.clear();
     descriptionController.clear();

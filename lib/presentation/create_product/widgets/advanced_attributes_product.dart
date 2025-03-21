@@ -10,47 +10,55 @@ class AdvancedAttributesProduct extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final createProductNotifier = ref
-        .read(createProductNotifierProvider.select((state) => state.product));
     final productNotifier = ref.read(createProductNotifierProvider.notifier);
+    final productState = ref.watch(createProductNotifierProvider).product;
 
     return CreateProductCard(
       columnList: [
         const CreateProductSectionTitle(title: 'Atributos avanzados'),
-        CompInputText(
+        _buildInputText(
           labelText: 'SKU',
-          initialValue: createProductNotifier.sku,
-          onChangedText: (value) => productNotifier.updateField(
-            fieldName: 'sku',
-            value: value,
-          ),
+          initialValue: productState.sku,
+          onChanged: (value) =>
+              productNotifier.updateField(fieldName: 'sku', value: value),
         ),
-        CompInputText(
+        _buildInputText(
           labelText: 'Código de barras',
-          initialValue: createProductNotifier.barcode,
-          onChangedText: (value) => productNotifier.updateField(
-            fieldName: 'barcode',
-            value: value,
-          ),
+          initialValue: productState.barcode,
+          onChanged: (value) =>
+              productNotifier.updateField(fieldName: 'barcode', value: value),
         ),
-        CompInputText(
+        _buildInputText(
           labelText: 'Peso (Kg)',
           keyboardType: TextInputType.number,
-          initialValue: createProductNotifier.weight.toString(),
-          onChangedText: (value) => productNotifier.updateField(
+          initialValue: productState.weight.toString(),
+          onChanged: (value) => productNotifier.updateField(
             fieldName: 'weight',
             value: double.tryParse(value) ?? 0.0,
           ),
         ),
-        CompInputText(
+        _buildInputText(
           labelText: 'Dimensiones (Alto x Ancho x Profundidad)',
-          initialValue: createProductNotifier.dimensions,
-          onChangedText: (value) => productNotifier.updateField(
-            fieldName: 'dimensions',
-            value: value,
-          ),
+          initialValue: productState.dimensions,
+          onChanged: (value) => productNotifier.updateField(
+              fieldName: 'dimensions', value: value),
         ),
+        SaveButton(),
       ],
+    );
+  }
+
+  Widget _buildInputText({
+    required String labelText,
+    required String initialValue,
+    required Function(String) onChanged,
+    TextInputType? keyboardType,
+  }) {
+    return CompInputText(
+      labelText: labelText,
+      initialValue: initialValue,
+      keyboardType: keyboardType,
+      onChangedText: onChanged,
     );
   }
 }

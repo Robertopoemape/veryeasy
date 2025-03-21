@@ -6,36 +6,55 @@ import '../../../core/core.dart';
 import '../providers/create_product_notifier.dart';
 import 'widgets.dart';
 
-class AdditionalIntoProduct extends ConsumerWidget {
-  const AdditionalIntoProduct({super.key});
+class AdditionalInfoProduct extends ConsumerWidget {
+  const AdditionalInfoProduct({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final createProductNotifier = ref
-        .read(createProductNotifierProvider.select((state) => state.product));
-    final productNotifier = ref.read(createProductNotifierProvider.notifier);
+    final productNotifier = ref.watch(createProductNotifierProvider.notifier);
+    final createProductNotifier =
+        ref.watch(createProductNotifierProvider).product;
+
+    CompInputText buildInputField({
+      required String labelText,
+      required String initialValue,
+      required void Function(String) onChanged,
+      TextInputType keyboardType = TextInputType.text,
+    }) {
+      return CompInputText(
+        labelText: labelText,
+        initialValue: initialValue,
+        onChangedText: onChanged,
+        keyboardType: keyboardType,
+      );
+    }
 
     return CreateProductCard(
       columnList: [
         const CreateProductSectionTitle(title: 'Información adicional'),
         gap8,
-        CompInputText(
-          labelText: 'Marca',
-          initialValue: createProductNotifier.brand,
-          onChangedText: (value) => productNotifier.updateField(
-            fieldName: 'brand',
-            value: value,
-          ),
+        buildInputField(
+          labelText: 'Familia',
+          initialValue: createProductNotifier.family,
+          onChanged: (value) =>
+              productNotifier.updateField(fieldName: 'family', value: value),
         ),
-        CompInputText(
+        buildInputField(
+          labelText: 'Categoría',
+          initialValue: createProductNotifier.category,
+          onChanged: (value) =>
+              productNotifier.updateField(fieldName: 'category', value: value),
+        ),
+        buildInputField(
           labelText: 'Stock mínimo',
-          keyboardType: TextInputType.number,
           initialValue: createProductNotifier.minStock.toString(),
-          onChangedText: (value) => productNotifier.updateField(
+          onChanged: (value) => productNotifier.updateField(
             fieldName: 'minStock',
             value: int.tryParse(value) ?? 0,
           ),
+          keyboardType: TextInputType.number,
         ),
+        SaveButton(),
       ],
     );
   }
