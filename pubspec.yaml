@@ -76,6 +76,10 @@ flutter:
           weight: 700
           style: italic
 
+    - family: Heaters
+      fonts:
+        - asset: assets/fonts/Heaters.ttf
+
   assets:
     - assets/img/gif/
     - assets/img/png/

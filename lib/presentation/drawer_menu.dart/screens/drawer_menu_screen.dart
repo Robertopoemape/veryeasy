@@ -87,7 +87,7 @@ class DrawerMenuScreen extends ConsumerWidget {
                 text: 'Reporte de ventas',
                 onTap: () {
                   autoRouterPop(context);
-                  autoRouterPush(context, GeneratorIARoute());
+                  //  autoRouterPush(context, ProductSavedRoute(product: null));
                 },
               ),
               _buildDrawerItem(

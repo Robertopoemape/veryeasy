@@ -2,23 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:veryeasy/core/style/app_colors.dart';
 
 const String font = 'Roboto';
-const String fontFamily = 'Furious';
+const String fontFamily = 'Heaters';
 
 const TextStyle textStyle = TextStyle(
   fontFamily: font,
   color: ComColors.white1000,
 );
 
-const TextStyle textStyleFurious = TextStyle(
+const TextStyle textStyleHeaters = TextStyle(
   fontFamily: fontFamily,
   color: ComColors.white,
 );
 
 const double _display96Size = 96;
 const double _display60Size = 60;
-const double _display64Size = 64;
+const double _display45Size = 45;
+const double _display47Size = 47;
 const double _display48Size = 48;
-const double _display36Size = 36;
 const double _display34Size = 34;
 const double _display24Size = 24;
 const double _display22Size = 22;
@@ -140,17 +140,17 @@ extension TextStyleColorExtension on TextStyle {
 }
 
 abstract class ComTextStyle {
-  static TextStyle displayXL = textStyleFurious.copyWith(
+  static TextStyle displayXL = textStyleHeaters.copyWith(
     fontSize: _display96Size,
     fontWeight: FontWeight.w400,
   );
 
-  static TextStyle displayM = textStyleFurious.copyWith(
-    fontSize: _display64Size,
+  static TextStyle displayM = textStyleHeaters.copyWith(
+    fontSize: _display47Size,
     fontWeight: FontWeight.w400,
   );
-  static TextStyle displayS = textStyleFurious.copyWith(
-    fontSize: _display36Size,
+  static TextStyle displayS = textStyleHeaters.copyWith(
+    fontSize: _display45Size,
     fontWeight: FontWeight.w400,
   );
 

@@ -71,6 +71,7 @@ class CreateProductNotifier extends _$CreateProductNotifier {
             : state.product.dimensions,
       ),
     );
+
     final Map<String, void Function(String)> controllerMap = {
       'name': (text) => nameController.text = text,
       'stock': (text) => stockController.text = text,
@@ -145,8 +146,8 @@ class CreateProductNotifier extends _$CreateProductNotifier {
     }
   }
 
-  Future<void> saveProduct(BuildContext context) async {
-    state = state.copyWith(isLoading: true, errorMessage: null);
+  Future<String?> saveProduct(BuildContext context) async {
+    state = state.copyWith(errorMessage: null);
     try {
       if (!state.product.isValid) {
         throw Exception('Los datos del producto no son válidos.');
@@ -154,18 +155,20 @@ class CreateProductNotifier extends _$CreateProductNotifier {
 
       final productId = await _saveProductToFirestore(state.product);
 
-      _showSnackbar(context, 'Producto guardado con éxito (ID: $productId)');
-
-      await Future.delayed(const Duration(milliseconds: 500));
-
       resetState();
+
+      return productId;
     } catch (e) {
       log('Error al guardar el producto: $e');
       state = state.copyWith(errorMessage: e.toString());
-      _showSnackbar(context, 'Error al guardar el producto: ${e.toString()}',
-          isError: true);
+      _showSnackbar(
+        context,
+        'Error al guardar el producto: ${e.toString()}',
+        isError: true,
+      );
+      return null;
     } finally {
-      state = state.copyWith(isLoading: false);
+      state = state.copyWith();
     }
   }
 
