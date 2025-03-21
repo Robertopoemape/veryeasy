@@ -11,18 +11,22 @@ class MainDataProduct extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final createProductNotifier = ref
-        .read(createProductNotifierProvider.select((state) => state.product));
-    final productNotifier = ref.read(createProductNotifierProvider.notifier);
+    final createProductNotifier =
+        ref.watch(createProductNotifierProvider).product;
+    final controller = ref.watch(createProductNotifierProvider.notifier);
+    final productNotifier = ref.watch(createProductNotifierProvider.notifier);
     return CreateProductCard(
       columnList: [
         const CreateProductSectionTitle(title: 'Datos principales'),
         gap8,
         CompInputText(
           labelText: 'Nombre del producto',
+          controller: controller.nameController,
           initialValue: createProductNotifier.name,
-          onChangedText: (value) =>
-              productNotifier.updateField(fieldName: 'name', value: value),
+          onChangedText: (value) => productNotifier.updateField(
+            fieldName: 'name',
+            value: value,
+          ),
         ),
         Row(
           children: [
@@ -30,6 +34,7 @@ class MainDataProduct extends ConsumerWidget {
               child: CompInputText(
                 labelText: 'Stock',
                 keyboardType: TextInputType.number,
+                controller: controller.stockController,
                 initialValue: createProductNotifier.stock.toString(),
                 onChangedText: (value) => productNotifier.updateField(
                   fieldName: 'stock',
@@ -42,10 +47,11 @@ class MainDataProduct extends ConsumerWidget {
               child: CompInputText(
                 labelText: 'Precio',
                 keyboardType: TextInputType.number,
+                controller: controller.priceController,
                 initialValue: createProductNotifier.price.toString(),
                 onChangedText: (value) => productNotifier.updateField(
                   fieldName: 'price',
-                  value: double.tryParse(value) ?? 0.0,
+                  value: int.tryParse(value) ?? 0,
                 ),
               ),
             ),
@@ -57,6 +63,7 @@ class MainDataProduct extends ConsumerWidget {
               child: CompDropdown(
                 items: ['UND', 'CAJA', 'PQT', 'BOLSA'],
                 hintText: 'U.M',
+                controller: controller.unitMeasurement,
                 initialValue: createProductNotifier.unitMeasurement,
                 onChanged: (value) => productNotifier.updateField(
                   fieldName: 'unitMeasurement',
@@ -69,6 +76,7 @@ class MainDataProduct extends ConsumerWidget {
               child: CompInputText(
                 labelText: 'Contenido',
                 keyboardType: TextInputType.number,
+                controller: controller.contentUnitController,
                 initialValue: createProductNotifier.contentUnit.toString(),
                 onChangedText: (value) => productNotifier.updateField(
                   fieldName: 'contentUnit',
@@ -83,6 +91,7 @@ class MainDataProduct extends ConsumerWidget {
             Expanded(
               child: CompTextArea(
                 labelText: 'Descripción',
+                controller: controller.descriptionController,
                 initialValue: createProductNotifier.description,
                 onChanged: (value) => productNotifier.updateField(
                   fieldName: 'description',

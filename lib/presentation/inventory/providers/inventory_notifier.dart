@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:veryeasy/presentation/inventory/providers/inventory_state.dart';
@@ -22,7 +23,7 @@ class InventoryNotifier extends _$InventoryNotifier {
       searchController.dispose();
     });
     state = const AsyncValue.data(InventoryState(isSearching: false));
-    final products = await _loadProducts();
+    final products = await _fetchProducts();
     return InventoryState(products: products, allProducts: products);
   }
 
@@ -70,7 +71,7 @@ class InventoryNotifier extends _$InventoryNotifier {
   Future<void> refresh() async {
     state = const AsyncValue.loading();
     try {
-      final data = await _loadProducts();
+      final data = await _fetchProducts();
 
       final sortedProducts = _sortProducts(
         data,
@@ -89,14 +90,13 @@ class InventoryNotifier extends _$InventoryNotifier {
     }
   }
 
-  Future<List<Product>> _loadProducts() async {
-    await Future.delayed(const Duration(seconds: 2));
+  Future<List<Product>> _fetchProducts() async {
+    /* await Future.delayed(const Duration(seconds: 2));
     return [
       Product(
-        id: '1',
         name: 'Producto A',
         stock: 10,
-        price: 19.99,
+        price: 19,
         image: 'assets/img/png/not-img.png',
         description: 'Descripción del Producto A',
         brand: '',
@@ -109,10 +109,9 @@ class InventoryNotifier extends _$InventoryNotifier {
         dimensions: '',
       ),
       Product(
-        id: '2',
         name: 'Producto B',
         stock: 5,
-        price: 29.99,
+        price: 29,
         image: 'assets/img/png/not-img.png',
         description: 'Descripción del Producto B',
         brand: '',
@@ -125,10 +124,9 @@ class InventoryNotifier extends _$InventoryNotifier {
         dimensions: '',
       ),
       Product(
-        id: '3',
         name: 'Producto C',
         stock: 20,
-        price: 9.99,
+        price: 9,
         image: 'assets/img/png/not-img.png',
         description: 'Descripción del Producto C',
         brand: '',
@@ -140,7 +138,23 @@ class InventoryNotifier extends _$InventoryNotifier {
         weight: 0,
         dimensions: '',
       ),
-    ];
+    ];*/
+    try {
+      final querySnapshot =
+          await FirebaseFirestore.instance.collection('products').get();
+
+      final products = querySnapshot.docs.map((doc) {
+        Map<String, dynamic> data = doc.data();
+        return Product.fromJson(data);
+      }).toList();
+
+      state =
+          AsyncValue.data(InventoryState(products: products, isLoading: false));
+      return products;
+    } catch (e) {
+      state = AsyncValue.error(e, StackTrace.current);
+      rethrow;
+    }
   }
 
   final List<String> sortOptions = [

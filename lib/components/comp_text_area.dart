@@ -40,16 +40,21 @@ class _CompTextAreaState extends State<CompTextArea> {
   void initState() {
     super.initState();
     borderColor = widget.borderColor ?? ComColors.black500;
+
     internalController = widget.controller ?? TextEditingController();
 
+    if (widget.initialValue != null) {
+      internalController!.text = widget.initialValue!;
+    }
+
     internalController!.addListener(() {
-      if (mounted) {
-        setState(() {
-          if (widget.initialValue != null) {
-            internalController!.text = widget.initialValue!;
-          }
-        });
-      }
+      setState(() {
+        if (internalController!.text.isEmpty) {
+          borderColor = ComColors.black500;
+        } else {
+          borderColor = ComColors.greenA100;
+        }
+      });
     });
   }
 
@@ -70,7 +75,7 @@ class _CompTextAreaState extends State<CompTextArea> {
         children: [
           gap8,
           TextFormField(
-            controller: widget.controller,
+            controller: internalController!,
             maxLines: widget.maxLines,
             minLines: widget.minLines,
             decoration: InputDecoration(

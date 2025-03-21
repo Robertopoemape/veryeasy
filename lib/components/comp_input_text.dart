@@ -45,6 +45,13 @@ class _CompInputTextState extends State<CompInputText> {
     super.initState();
     borderColor = widget.borderColor ?? ComColors.black500;
     _isObscure = widget.obscureText;
+    widget.controller?.addListener(() {
+      if (mounted && widget.controller!.text.isEmpty) {
+        setState(() {
+          borderColor = ComColors.black500;
+        });
+      }
+    });
   }
 
   @override
@@ -102,7 +109,7 @@ class _CompInputTextState extends State<CompInputText> {
         onChanged: (value) {
           setState(() {
             if (value.isNotEmpty) {
-              borderColor = ComColors.green500;
+              borderColor = ComColors.greenA100;
             } else {
               borderColor = ComColors.red500;
             }

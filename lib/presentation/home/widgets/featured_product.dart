@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:veryeasy/components/comp_subtitle.dart';
+import 'package:veryeasy/components/components.dart';
 
 import '../../../core/core.dart';
 import '../../product/providers/product_notifier.dart';
@@ -11,7 +11,7 @@ class FeaturedProduct extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final productNotifier = ref.watch(productNotifierProvider.notifier);
+    final productState = ref.watch(productNotifierProvider);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -22,7 +22,12 @@ class FeaturedProduct extends ConsumerWidget {
         gap10,
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: ds12),
-          child: ProductList(products: productNotifier.staticProducts),
+          child: productState.when(
+            data: (state) => ProductList(products: state.products),
+            loading: () => CompLoading(),
+            error: (error, stackTrace) =>
+                CompError(message: error.toString(), onPressed: () {}),
+          ),
         ),
       ],
     );

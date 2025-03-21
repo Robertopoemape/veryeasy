@@ -16,8 +16,9 @@ class SaveButton extends ConsumerWidget {
     final productNotifier = ref.read(createProductNotifierProvider.notifier);
 
     return CompButton(
-      onPressed:
-          !isValid ? null : () async => await productNotifier.saveProduct(),
+      onPressed: !isValid
+          ? null
+          : () async => await productNotifier.saveProduct(context),
       name: 'Guardar',
     );
   }

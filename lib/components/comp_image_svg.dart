@@ -170,11 +170,7 @@ class _CompImageSvgState extends State<CompImageSvg> {
   }
 
   Widget _buildErrorOrLoading() {
-    return Center(
-      child: widget.pathNetwork.contains('background')
-          ? CircularProgressIndicator(color: Colors.transparent)
-          : _crearSkeleton(),
-    );
+    return _crearSkeleton();
   }
 
   Widget _crearSkeleton() {

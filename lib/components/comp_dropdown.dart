@@ -44,22 +44,17 @@ class _DropdownState extends State<CompDropdown> {
   @override
   void initState() {
     super.initState();
-    borderColor = widget.borderColor ?? ComColors.bgcblack;
+    borderColor = widget.borderColor ?? ComColors.black500;
+
     internalController = widget.controller ?? TextEditingController();
 
-    if (widget.initialValue != null &&
-        widget.items.contains(widget.initialValue)) {
-      internalController.text = widget.initialValue!;
-      selectedValue = widget.initialValue;
-      borderColor = ComColors.greenA100;
-    }
-
     internalController.addListener(() {
-      if (!mounted) return;
       setState(() {
-        final text = internalController.text;
-        selectedValue = widget.items.contains(text) ? text : null;
-        borderColor = text.isEmpty ? ComColors.bgcblack : borderColor;
+        if (internalController.text.isEmpty) {
+          borderColor = ComColors.black500;
+        } else {
+          borderColor = ComColors.greenA100;
+        }
       });
     });
   }
@@ -100,7 +95,9 @@ class _DropdownState extends State<CompDropdown> {
                   ),
                 ),
           DropdownButtonFormField<String>(
-            value: selectedValue,
+            value: internalController.text.isNotEmpty
+                ? internalController.text
+                : null,
             decoration: InputDecoration(
               labelStyle: ComTextStyle.caption.white800,
               contentPadding: const EdgeInsets.symmetric(horizontal: ds16),
@@ -121,13 +118,10 @@ class _DropdownState extends State<CompDropdown> {
                     ))
                 .toList(),
             onChanged: (value) {
-              if (!mounted) return;
-              setState(() {
-                internalController.text = value ?? '';
-                selectedValue = value;
-                borderColor = ComColors.greenA100;
-              });
-              widget.onChanged?.call(value);
+              if (value != null) {
+                internalController.text = value;
+                if (widget.onChanged != null) widget.onChanged!(value);
+              }
             },
           ),
         ],

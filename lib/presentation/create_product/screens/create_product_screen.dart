@@ -13,18 +13,7 @@ class CreateProductScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isLoading = ref.read(createProductNotifierProvider).isLoading;
-
-    if (isLoading) {
-      return Scaffold(
-        appBar: AppBar(
-          title: Text('Registro de Producto', style: ComTextStyle.h6),
-          centerTitle: true,
-          backgroundColor: ComColors.primaryColor,
-        ),
-        body: CompLoading(),
-      );
-    }
+    final isLoading = ref.watch(createProductNotifierProvider).isLoading;
 
     return Scaffold(
       appBar: AppBar(
@@ -32,22 +21,27 @@ class CreateProductScreen extends ConsumerWidget {
         centerTitle: true,
         backgroundColor: ComColors.primaryColor,
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(ds16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            MainDataProduct(),
-            gap8,
-            ComDivider(),
-            gap8,
-            AdditionalIntoProduct(),
-            gap8,
-            ComDivider(),
-            gap8,
-            AdvancedAttributesProduct(),
-          ],
-        ),
+      body: Stack(
+        children: [
+          SingleChildScrollView(
+            padding: const EdgeInsets.all(ds16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                MainDataProduct(),
+                gap8,
+                ComDivider(),
+                gap8,
+                AdditionalIntoProduct(),
+                gap8,
+                ComDivider(),
+                gap8,
+                AdvancedAttributesProduct(),
+              ],
+            ),
+          ),
+          if (isLoading) const Center(child: CompLoading()),
+        ],
       ),
     );
   }

@@ -8,10 +8,9 @@ class Product with _$Product {
   const Product._();
 
   const factory Product({
-    required String id,
     required String name,
     required int stock,
-    required double price,
+    required int price,
     required String image,
     required String description,
     required String brand,
@@ -28,10 +27,9 @@ class Product with _$Product {
       _$ProductFromJson(json);
 
   factory Product.empty() => Product(
-        id: '',
         name: '',
         stock: 0,
-        price: 0.0,
+        price: 0,
         image: '',
         description: '',
         brand: '',
@@ -52,5 +50,24 @@ class Product with _$Product {
         contentUnit > 0 &&
         description.isNotEmpty &&
         image.isNotEmpty;
+  }
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'name': name,
+      'stock': stock,
+      'price': price,
+      'description': description,
+      'image': image,
+      'brand': brand,
+      'contentUnit': contentUnit,
+      'unitMeasurement': unitMeasurement,
+      'minStock': minStock,
+      'sku': sku,
+      'barcode': barcode,
+      'weight': weight,
+      'dimensions': dimensions,
+    };
   }
 }
