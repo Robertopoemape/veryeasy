@@ -17,8 +17,6 @@ class MainDataProduct extends ConsumerWidget {
     final productNotifier = ref.watch(createProductNotifierProvider.notifier);
     return CreateProductCard(
       columnList: [
-        const CreateProductSectionTitle(title: 'Datos principales'),
-        gap8,
         CompInputText(
           labelText: 'Nombre del producto',
           controller: controller.nameController,

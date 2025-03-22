@@ -25,7 +25,7 @@ class ProductCard extends StatelessWidget {
             alignment: Alignment.center,
             height: ds120,
             child: CompImageSvg(
-              pathNetwork: product.image,
+              pathNetwork: product.image!,
             ),
           ),
           Padding(

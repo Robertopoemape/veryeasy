@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../components/components.dart';
-import '../../../core/core.dart';
 import '../providers/create_product_notifier.dart';
 import 'widgets.dart';
 
@@ -31,17 +30,15 @@ class AdditionalInfoProduct extends ConsumerWidget {
 
     return CreateProductCard(
       columnList: [
-        const CreateProductSectionTitle(title: 'Información adicional'),
-        gap8,
         buildInputField(
           labelText: 'Familia',
-          initialValue: createProductNotifier.family,
+          initialValue: createProductNotifier.family ?? '',
           onChanged: (value) =>
               productNotifier.updateField(fieldName: 'family', value: value),
         ),
         buildInputField(
           labelText: 'Categoría',
-          initialValue: createProductNotifier.category,
+          initialValue: createProductNotifier.category ?? '',
           onChanged: (value) =>
               productNotifier.updateField(fieldName: 'category', value: value),
         ),

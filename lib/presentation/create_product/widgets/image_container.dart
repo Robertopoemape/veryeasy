@@ -13,14 +13,14 @@ class ImageContainer extends ConsumerWidget {
     final createProductNotifier = ref
         .watch(createProductNotifierProvider.select((state) => state.product));
 
-    final isValidateImage = createProductNotifier.image.isNotEmpty;
+    final isValidateImage = createProductNotifier.image?.isNotEmpty ?? false;
 
     return Column(
       children: [
         if (isValidateImage) ...[
           gap8,
           CompImageSvg(
-            pathNetwork: createProductNotifier.image,
+            pathNetwork: createProductNotifier.image!,
             width: ds250,
             height: ds250,
             fit: BoxFit.cover,

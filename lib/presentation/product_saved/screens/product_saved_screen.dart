@@ -37,7 +37,7 @@ class ProductSavedScreen extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 CompImageSvg(
-                  pathNetwork: product.image,
+                  pathNetwork: product.image!,
                   width: ds250,
                   height: ds250,
                 ),

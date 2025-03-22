@@ -11,18 +11,18 @@ class Product with _$Product {
     required String name,
     required int stock,
     required int price,
-    required String image,
-    required String description,
-    required String family,
-    required String brand,
-    required String category,
+    String? image,
+    String? description,
+    String? family,
+    String? brand,
+    String? category,
     required int contentUnit,
-    required String unitMeasurement,
+    String? unitMeasurement,
     required int minStock,
-    required String sku,
-    required String barcode,
+    String? sku,
+    String? barcode,
     required double weight,
-    required String dimensions,
+    String? dimensions,
   }) = _Product;
 
   factory Product.fromJson(Map<String, dynamic> json) =>
@@ -32,48 +32,27 @@ class Product with _$Product {
         name: '',
         stock: 0,
         price: 0,
-        image: '',
-        description: '',
-        brand: '',
-        family: '',
-        category: '',
+        image: null,
+        description: null,
+        brand: null,
+        family: null,
+        category: null,
         contentUnit: 0,
-        unitMeasurement: '',
+        unitMeasurement: null,
         minStock: 0,
-        sku: '',
-        barcode: '',
+        sku: null,
+        barcode: null,
         weight: 0.0,
-        dimensions: '',
+        dimensions: null,
       );
 
   bool get isValid {
     return name.isNotEmpty &&
         stock > 0 &&
         price > 0 &&
-        unitMeasurement.isNotEmpty &&
+        (unitMeasurement?.isNotEmpty ?? false) &&
         contentUnit > 0 &&
-        description.isNotEmpty &&
-        image.isNotEmpty;
-  }
-
-  @override
-  Map<String, dynamic> toJson() {
-    return {
-      'name': name,
-      'stock': stock,
-      'price': price,
-      'description': description,
-      'image': image,
-      'brand': brand,
-      'family': family,
-      'category': category,
-      'contentUnit': contentUnit,
-      'unitMeasurement': unitMeasurement,
-      'minStock': minStock,
-      'sku': sku,
-      'barcode': barcode,
-      'weight': weight,
-      'dimensions': dimensions,
-    };
+        (description?.isNotEmpty ?? false) &&
+        (image?.isNotEmpty ?? false);
   }
 }

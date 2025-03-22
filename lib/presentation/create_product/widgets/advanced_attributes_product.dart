@@ -15,16 +15,15 @@ class AdvancedAttributesProduct extends ConsumerWidget {
 
     return CreateProductCard(
       columnList: [
-        const CreateProductSectionTitle(title: 'Atributos avanzados'),
         _buildInputText(
           labelText: 'SKU',
-          initialValue: productState.sku,
+          initialValue: productState.sku ?? '',
           onChanged: (value) =>
               productNotifier.updateField(fieldName: 'sku', value: value),
         ),
         _buildInputText(
           labelText: 'Código de barras',
-          initialValue: productState.barcode,
+          initialValue: productState.barcode ?? '',
           onChanged: (value) =>
               productNotifier.updateField(fieldName: 'barcode', value: value),
         ),
@@ -39,7 +38,7 @@ class AdvancedAttributesProduct extends ConsumerWidget {
         ),
         _buildInputText(
           labelText: 'Dimensiones (Alto x Ancho x Profundidad)',
-          initialValue: productState.dimensions,
+          initialValue: productState.dimensions ?? '',
           onChanged: (value) => productNotifier.updateField(
               fieldName: 'dimensions', value: value),
         ),

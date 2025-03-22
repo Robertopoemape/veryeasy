@@ -37,7 +37,7 @@ class InventoryCard extends StatelessWidget {
         child: Row(
           children: [
             CompImageSvg(
-              pathNetwork: item.image,
+              pathNetwork: item.image!,
               width: ds60,
             ),
             space12,

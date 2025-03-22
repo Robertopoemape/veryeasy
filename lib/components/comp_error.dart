@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:veryeasy/components/components.dart';
 
 import '../core/core.dart';
 
@@ -21,9 +22,10 @@ class CompError extends ConsumerWidget {
         children: [
           Text(message, textAlign: TextAlign.center),
           gap12,
-          ElevatedButton(
+          CompButton(
+            name: 'Reintentar',
             onPressed: onPressed,
-            child: const Text('Reintentar'),
+            width: ds150,
           ),
         ],
       ),
